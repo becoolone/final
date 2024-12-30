@@ -44,10 +44,10 @@
             font-size: 18px;
         }
 
-        .art-link span {
+        .art-link img {
             margin-left: 10px;
-            font-size: 24px;
-            transform: rotate(45deg);
+            width: 24px;
+            height: 24px;
         }
 
         /* Social icons */
@@ -121,6 +121,26 @@
             justify-content: space-between;
         }
 
+        .go-back {
+            position: fixed; /* Stays in view */
+            cursor: pointer;
+            background-color: #fff;
+            padding: 10px 15px;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .go-back.bottom {
+            bottom: 40px;
+            left: 40px;
+        }
+
+        .go-back img {
+            width: 24px;
+            height: 24px;
+            vertical-align: middle;
+        }
+
     </style>
 </head>
 <body>
@@ -128,7 +148,16 @@
         <div class="header">
             <h2>Berwan Barzinji</h2>
             <img src="berwan.jpg" alt="Profile Image">
-            <a class="art-link" href="#" onclick="showGallery()">Art Works 2020/2022 <span>&#x2197;</span></a>
+            <a class="art-link" href="#">
+         <span style="font-weight: bold;">Communication enginner</span> &nbsp;2016/2021
+
+            </a>
+            <a class="art-link" href="#" onclick="showGallery()">
+         <span style="font-weight: bold;">Art Works</span> &nbsp;2020/2022
+            <img src="arrowright.png" alt="Arrow Icon" style="width: 20px; height: 20px; margin-left: 10px;">
+            </a>
+
+
         </div>
 
         <!-- Social Media Icons -->
@@ -163,54 +192,20 @@
             <img src="art8.jpg" alt="Artwork 8">
             <img src="art9.jpg" alt="Artwork 9">
         </div>
-       <!-- Add this inside the gallery div -->
-
-<div class="go-back bottom" onclick="goBack()">&larr; Go back</div>
-
-<style>
-    /* Style for the 'Go back' arrows */
-    .go-back {
-        position: fixed; /* Ensure it stays in view regardless of scrolling */
-        cursor: pointer;
-        font-size: 20px;
-        font-weight: bold;
-        color: #000;
-        background-color: #fff;
-        padding: 10px 15px;
-        border-radius: 5px;
-        text-decoration: none;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    }
-
-
-
-    .go-back.bottom {
-        bottom: 40px;
-        left: 40px;
-    }
-</style>
-
-<script>
-    function goBack() {
-        document.querySelector('.main').style.display = 'flex';
-        document.getElementById('gallery').style.display = 'none';
-    }
-</script>
-
-
-<script>
-    function goBack() {
-        document.querySelector('.main').style.display = 'flex';
-        document.getElementById('gallery').style.display = 'none';
-    }
-</script>
-
+        <div class="go-back bottom" onclick="goBack()">
+            <img src="arrowleft.png" alt="Arrow Left"> Go back
+        </div>
     </div>
 
     <script>
         function showGallery() {
             document.querySelector('.main').style.display = 'none';
             document.getElementById('gallery').style.display = 'flex';
+        }
+
+        function goBack() {
+            document.querySelector('.main').style.display = 'flex';
+            document.getElementById('gallery').style.display = 'none';
         }
     </script>
 </body>
