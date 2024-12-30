@@ -11,10 +11,6 @@
             font-family: Arial, sans-serif;
             background-color: #fff;
             color: #000;
-            display: flex;
-            flex-direction: column;
-            height: 100vh;
-            justify-content: space-between;
         }
 
         /* Top-left name */
@@ -36,6 +32,22 @@
             height: auto;
             margin-top: 10px;
             border-radius: 5px;
+        }
+
+        .art-link {
+            margin-top: 20px;
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            color: #000;
+            text-decoration: none;
+            font-size: 18px;
+        }
+
+        .art-link span {
+            margin-left: 10px;
+            font-size: 24px;
+            transform: rotate(45deg);
         }
 
         /* Social icons */
@@ -72,58 +84,134 @@
             line-height: 1;
         }
 
-        /* Large Screens */
-        @media (min-width: 1024px) {
-            .header h2 {
-                font-size: 18px;
-            }
+        .gallery {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
 
-            .header img {
-                width: 250px;
-            }
+        .gallery-header {
+            margin-bottom: 20px;
+            font-size: 24px;
+            font-weight: bold;
+        }
 
-            .content .title {
-                font-size: 10vw; /* Larger font size relative to viewport */
+        .artworks {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .artworks img {
+            width: 100%;
+            border-radius: 10px;
+        }
+
+        @media (max-width: 1023px) {
+            .artworks {
+                grid-template-columns: 1fr;
             }
         }
 
-        /* Medium Screens */
-        @media (max-width: 1023px) and (min-width: 768px) {
-            .header h2 {
-                font-size: 16px;
-            }
-
-            .header img {
-                width: 220px;
-            }
-
-            .content .title {
-                font-size: 12vw; /* Adjust title size for medium screens */
-            }
+        .main {
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            justify-content: space-between;
         }
+
     </style>
 </head>
 <body>
-    <div class="header">
-        <h2>Berwan Barzinji</h2>
-        <img src="berwan.jpg" alt="Profile Image">
+    <div class="main">
+        <div class="header">
+            <h2>Berwan Barzinji</h2>
+            <img src="berwan.jpg" alt="Profile Image">
+            <a class="art-link" href="#" onclick="showGallery()">Art Works 2020/2022 <span>&#x2197;</span></a>
+        </div>
+
+        <!-- Social Media Icons -->
+        <div class="social-icons">
+            <a href="https://instagram.com/berrwan" target="_blank">
+                <img src="instagram-icon.png" alt="Instagram">
+            </a>
+            <a href="https://twitter.com/BerwanBarzinji" target="_blank">
+                <img src="twitter-icon.png" alt="Twitter">
+            </a>
+            <a href="https://t.me/+1jB6Ldg0YQM0MmYy" target="_blank">
+                <img src="telegram-icon.png" alt="Telegram">
+            </a>
+        </div>
+
+        <div class="content">
+            <p class="title">Free<br>Kurdistan</p>
+        </div>
     </div>
 
-    <!-- Social Media Icons -->
-    <div class="social-icons">
-        <a href="https://instagram.com/berrwan" target="_blank">
-            <img src="instagram-icon.png" alt="Instagram">
-        </a>
-        <a href="https://twitter.com/BerwanBarzinji" target="_blank">
-            <img src="twitter-icon.png" alt="Twitter">
-        </a>
-        <a href="https://t.me/+1jB6Ldg0YQM0MmYy" target="_blank">
-            <img src="telegram-icon.png" alt="Telegram">
-        </a>
+    <!-- Gallery Section -->
+    <div class="gallery" id="gallery">
+        <h2 class="gallery-header">All these art works made by Autodesk Maya for 3D modeling and rendering and Photoshop for texturing:</h2>
+        <div class="artworks">
+            <img src="art1.jpg" alt="Artwork 1">
+            <img src="art2.jpg" alt="Artwork 2">
+            <img src="art3.jpg" alt="Artwork 3">
+            <img src="art4.jpg" alt="Artwork 4">
+            <img src="art5.jpg" alt="Artwork 5">
+            <img src="art6.jpg" alt="Artwork 6">
+            <img src="art7.jpg" alt="Artwork 7">
+            <img src="art8.jpg" alt="Artwork 8">
+            <img src="art9.jpg" alt="Artwork 9">
+        </div>
+       <!-- Add this inside the gallery div -->
+
+<div class="go-back bottom" onclick="goBack()">&larr; Go back</div>
+
+<style>
+    /* Style for the 'Go back' arrows */
+    .go-back {
+        position: fixed; /* Ensure it stays in view regardless of scrolling */
+        cursor: pointer;
+        font-size: 20px;
+        font-weight: bold;
+        color: #000;
+        background-color: #fff;
+        padding: 10px 15px;
+        border-radius: 5px;
+        text-decoration: none;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+
+
+    .go-back.bottom {
+        bottom: 40px;
+        left: 40px;
+    }
+</style>
+
+<script>
+    function goBack() {
+        document.querySelector('.main').style.display = 'flex';
+        document.getElementById('gallery').style.display = 'none';
+    }
+</script>
+
+
+<script>
+    function goBack() {
+        document.querySelector('.main').style.display = 'flex';
+        document.getElementById('gallery').style.display = 'none';
+    }
+</script>
+
     </div>
 
-    <div class="content">
-        <p class="title">Free<br>Kurdistan</p>
-    </div>
+    <script>
+        function showGallery() {
+            document.querySelector('.main').style.display = 'none';
+            document.getElementById('gallery').style.display = 'flex';
+        }
+    </script>
 </body>
 </html>
