@@ -3,211 +3,337 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Berwan</title>
+    <title>Berwan Barzinji</title>
     <style>
-        body {
+        * {
             margin: 0;
             padding: 0;
-            font-family: Arial, sans-serif;
-            background-color: #fff;
-            color: #000;
+            box-sizing: border-box;
         }
 
-        /* Top-left name */
-        .header {
-            position: absolute;
-            top: 20px;
-            left: 40px;
-            text-align: left;
+        body {
+            font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Roboto Mono', monospace;
+            background: #fafafa;
+            color: #1a1a1a;
+            line-height: 1.4;
         }
 
-        .header h2 {
-            font-size: 20px;
-            font-weight: bold;
-            margin: 0;
-        }
-
-        .header img {
-            width: 150px;
-            height: auto;
-            margin-top: 10px;
-            border-radius: 5px;
-        }
-
-        .art-link {
-            margin-top: 20px;
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 60px 40px;
+            min-height: 100vh;
             display: flex;
-            align-items: center;
-            cursor: pointer;
-            color: #000;
-            text-decoration: none;
-            font-size: 18px;
-        }
-
-        .art-link img {
-            margin-left: 10px;
-            width: 24px;
-            height: 24px;
-        }
-
-        /* Social icons */
-        .social-icons {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            display: flex;
-            gap: 15px;
-        }
-
-        .social-icons a {
-            text-decoration: none;
-        }
-
-        .social-icons img {
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-        }
-
-        /* Bottom-right title */
-        .content {
-            position: absolute;
-            bottom: 40px;
-            right: 40px;
-            text-align: right;
-        }
-
-        .content .title {
-            font-size: 10vw; /* Relative to the viewport width */
-            font-weight: bold;
-            margin: 10px 0 0;
-            line-height: 1;
-        }
-
-        .gallery {
-            display: none;
             flex-direction: column;
-            align-items: center;
-            padding: 20px;
         }
 
-        .gallery-header {
-            margin-bottom: 20px;
-            font-size: 24px;
-            font-weight: bold;
+        .header {
+            border-bottom: 1px solid #e0e0e0;
+            padding-bottom: 40px;
+            margin-bottom: 60px;
         }
 
-        .artworks {
+        .name {
+            font-size: 32px;
+            font-weight: 600;
+            letter-spacing: -0.5px;
+            margin-bottom: 8px;
+        }
+
+        .role {
+            font-size: 14px;
+            color: #666;
+            font-weight: 400;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .main-content {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
+            grid-template-columns: 300px 1fr;
+            gap: 80px;
+            flex: 1;
+        }
+
+        .sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+        }
+
+        .profile-image {
+            width: 200px;
+            height: 200px;
+            border-radius: 4px;
+            object-fit: cover;
+            border: 1px solid #e0e0e0;
+        }
+
+        .section {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .section-title {
+            font-size: 12px;
+            color: #999;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 500;
+        }
+
+        .experience-item {
+            padding: 12px 0;
+            border-bottom: 1px solid #f0f0f0;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .experience-item:hover {
+            background: #f8f8f8;
+            margin: 0 -12px;
+            padding: 12px;
+            border-radius: 4px;
+            border-bottom: 1px solid transparent;
+        }
+
+        .experience-title {
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 4px;
+        }
+
+        .experience-period {
+            font-size: 12px;
+            color: #666;
+        }
+
+        .social-links {
+            display: flex;
             gap: 20px;
         }
 
-        .artworks img {
-            width: 100%;
-            border-radius: 10px;
+        .social-link {
+            font-size: 12px;
+            color: #666;
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            transition: color 0.2s ease;
         }
 
-        @media (max-width: 1023px) {
-            .artworks {
+        .social-link:hover {
+            color: #1a1a1a;
+        }
+
+        .content-area {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .welcome-text {
+            font-size: 18px;
+            color: #666;
+            text-align: center;
+            max-width: 400px;
+        }
+
+        /* Gallery Styles */
+        .gallery {
+            display: none;
+            flex-direction: column;
+            gap: 40px;
+        }
+
+        .gallery-header {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .gallery-title {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 16px;
+        }
+
+        .gallery-description {
+            font-size: 14px;
+            color: #666;
+            line-height: 1.6;
+        }
+
+        .artworks-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .artwork-item {
+            aspect-ratio: 1;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid #e0e0e0;
+            transition: transform 0.2s ease;
+        }
+
+        .artwork-item:hover {
+            transform: translateY(-2px);
+        }
+
+        .artwork-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .back-button {
+            position: fixed;
+            top: 40px;
+            left: 40px;
+            background: #fff;
+            border: 1px solid #e0e0e0;
+            padding: 8px 16px;
+            border-radius: 4px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-weight: 500;
+        }
+
+        .back-button:hover {
+            background: #f8f8f8;
+            border-color: #ccc;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 40px 20px;
+            }
+
+            .main-content {
                 grid-template-columns: 1fr;
+                gap: 40px;
+            }
+
+            .profile-image {
+                width: 150px;
+                height: 150px;
+            }
+
+            .artworks-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .back-button {
+                top: 20px;
+                left: 20px;
             }
         }
-
-        .main {
-            display: flex;
-            flex-direction: column;
-            height: 100vh;
-            justify-content: space-between;
-        }
-
-        .go-back {
-            position: fixed; /* Stays in view */
-            cursor: pointer;
-            background-color: #fff;
-            padding: 10px 15px;
-            border-radius: 5px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
-
-        .go-back.bottom {
-            bottom: 40px;
-            left: 40px;
-        }
-
-        .go-back img {
-            width: 24px;
-            height: 24px;
-            vertical-align: middle;
-        }
-
     </style>
 </head>
 <body>
-    <div class="main">
-        <div class="header">
-            <h2>Berwan Barzinji</h2>
-            <img src="berwan.jpg" alt="Profile Image">
-            <a class="art-link" href="#">
-         <span style="font-weight: bold;">Engineer</span> &nbsp;2016/2021
+    <div class="main-view">
+        <div class="container">
+            <div class="header">
+                <div class="name">Berwan Barzinji</div>
+                <div class="role">Engineer / 3D Artist</div>
+            </div>
 
-            </a>
-            <a class="art-link" href="#" onclick="showGallery()">
-         <span style="font-weight: bold;">Art Works</span> &nbsp;2020/2022
-            <img src="arrowright.png" alt="Arrow Icon" style="width: 20px; height: 20px; margin-left: 10px;">
-            </a>
+            <div class="main-content">
+                <div class="sidebar">
+                    <img src="berwan.jpg" alt="Berwan Barzinji" class="profile-image">
+                    
+                    <div class="section">
+                        <div class="section-title">Experience</div>
+                        <div class="experience-item">
+                            <div class="experience-title">Engineering</div>
+                            <div class="experience-period">2016 — 2021</div>
+                        </div>
+                        <div class="experience-item" onclick="showGallery()">
+                            <div class="experience-title">3D Art & Design</div>
+                            <div class="experience-period">2020 — 2022</div>
+                        </div>
+                    </div>
 
+                    <div class="section">
+                        <div class="section-title">Connect</div>
+                        <div class="social-links">
+                            <a href="https://instagram.com/BerwanBarzinji" target="_blank" class="social-link">Instagram</a>
+                            <a href="https://x.com/BerwanBarzinji" target="_blank" class="social-link">Twitter</a>
+                            <a href="https://t.me/+1jB6Ldg0YQM0MmYy" target="_blank" class="social-link">Telegram</a>
+                        </div>
+                    </div>
+                </div>
 
-        </div>
-
-        <!-- Social Media Icons -->
-        <div class="social-icons">
-            <a href="https://instagram.com/BerwanBarzinji" target="_blank">
-                <img src="instagram-icon.png" alt="Instagram">
-            </a>
-            <a href="https://x.com/BerwanBarzinji" target="_blank">
-                <img src="twitter-icon.png" alt="Twitter">
-            </a>
-            <a href="https://t.me/+1jB6Ldg0YQM0MmYy" target="_blank">
-                <img src="telegram-icon.png" alt="Telegram">
-            </a>
-        </div>
-
-        <div class="content">
-            <p class="title">From<br>Kurdistan</p>
+                <div class="content-area">
+                    <div class="welcome-text">
+                        Engineering precision meets creative vision. Exploring the intersection of technical expertise and artistic expression through 3D modeling and design.
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
-    <!-- Gallery Section -->
     <div class="gallery" id="gallery">
-        <h2 class="gallery-header">All these art works made by Autodesk Maya for 3D modeling and rendering and Photoshop for texturing:</h2>
-        <div class="artworks">
-            <img src="art1.jpg" alt="Artwork 1">
-            <img src="art2.jpg" alt="Artwork 2">
-            <img src="art3.jpg" alt="Artwork 3">
-            <img src="art4.jpg" alt="Artwork 4">
-            <img src="art5.jpg" alt="Artwork 5">
-            <img src="art6.jpg" alt="Artwork 6">
-            <img src="art7.jpg" alt="Artwork 7">
-            <img src="art8.jpg" alt="Artwork 8">
-            <img src="art9.jpg" alt="Artwork 9">
-        </div>
-        <div class="go-back bottom" onclick="goBack()">
-            <img src="arrowleft.png" alt="Arrow Left"> Go back
+        <div class="container">
+            <button class="back-button" onclick="goBack()">← Back</button>
+            
+            <div class="gallery-header">
+                <div class="gallery-title">3D Art Portfolio</div>
+                <div class="gallery-description">
+                    A collection of 3D models and renders created using Autodesk Maya for modeling and rendering, with Photoshop for texturing and post-processing.
+                </div>
+            </div>
+
+            <div class="artworks-grid">
+                <div class="artwork-item">
+                    <img src="art1.jpg" alt="3D Artwork 1">
+                </div>
+                <div class="artwork-item">
+                    <img src="art2.jpg" alt="3D Artwork 2">
+                </div>
+                <div class="artwork-item">
+                    <img src="art3.jpg" alt="3D Artwork 3">
+                </div>
+                <div class="artwork-item">
+                    <img src="art4.jpg" alt="3D Artwork 4">
+                </div>
+                <div class="artwork-item">
+                    <img src="art5.jpg" alt="3D Artwork 5">
+                </div>
+                <div class="artwork-item">
+                    <img src="art6.jpg" alt="3D Artwork 6">
+                </div>
+                <div class="artwork-item">
+                    <img src="art7.jpg" alt="3D Artwork 7">
+                </div>
+                <div class="artwork-item">
+                    <img src="art8.jpg" alt="3D Artwork 8">
+                </div>
+                <div class="artwork-item">
+                    <img src="art9.jpg" alt="3D Artwork 9">
+                </div>
+            </div>
         </div>
     </div>
 
     <script>
         function showGallery() {
-            document.querySelector('.main').style.display = 'none';
+            document.querySelector('.main-view').style.display = 'none';
             document.getElementById('gallery').style.display = 'flex';
         }
 
         function goBack() {
-            document.querySelector('.main').style.display = 'flex';
+            document.querySelector('.main-view').style.display = 'block';
             document.getElementById('gallery').style.display = 'none';
         }
     </script>
 </body>
 </html>
-
