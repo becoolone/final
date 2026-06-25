@@ -3,385 +3,223 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Berwan Barzinji — Engineer & Creative Designer</title>
+<title>Berwan Farhad</title>
+  <link rel="icon" type="image/jpeg" href="bb.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<!-- Using Inter for maximum readability, clean aesthetics, and excellent responsiveness across all screens -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
 
 <style>
-  *,*::before,*::after{ margin:0; padding:0; box-sizing:border-box; }
+  *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
 
-  :root{
-    --cream:#f0ebe2;
-    --cream-deep:#e6dfd0;
-    --ink:#15120f;
-    --ink-soft:#221e19;
-    --muted:#8a8378;
-    --line: rgba(21,18,15,0.15);
-    --cream-line: rgba(240,235,226,0.14);
+  :root {
+    --cream: #f0ebe2;
+    --ink: #15120f;
+    --muted: #8a8378;
+    --dark-bg: #0a0a0a;
+    --dark-line: rgba(240,235,226,0.15);
   }
 
-  html{ scroll-behavior:smooth; }
-  body{ background:var(--cream); overflow-x:hidden; }
-
-  ::selection{ background:var(--ink); color:var(--cream); }
-
-  button{ font:inherit; cursor:pointer; }
-  a{ color:inherit; }
-
-  :focus-visible{ outline:2px solid var(--ink); outline-offset:3px; }
-
-  @media (prefers-reduced-motion: reduce){
-    *{ animation-duration:0.001ms !important; animation-iteration-count:1 !important; transition-duration:0.001ms !important; }
+  body {
+    background: var(--cream);
+    color: var(--ink);
+    font-family: 'Inter', sans-serif;
+    overflow-x: hidden;
+    min-height: 100vh;
   }
 
-  /* grain texture, shared */
-  .grain{
-    position:fixed; inset:0; pointer-events:none; z-index:5; opacity:0.045;
-    background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  a { color: inherit; text-decoration: none; }
+  button { font: inherit; background: none; border: none; cursor: pointer; color: inherit; }
+
+  /* Premium Grain Overlay Overlay */
+  .grain {
+    position: fixed; inset: 0; pointer-events: none; z-index: 99; opacity: 0.045;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   }
 
-  /* ════════════════ HERO ════════════════ */
-  #hero{
-    position:relative;
-    min-height:100vh;
-    display:flex;
-    flex-direction:column;
-    background:var(--cream);
-    color:var(--ink);
+  /* Views Management */
+  .view { display: none; min-height: 100vh; width: 100%; position: relative; }
+  .view.active { display: flex; flex-direction: column; }
+
+  /* ════════════════ MAIN VIEW (CREAM - NO SCROLL) ════════════════ */
+  #main-view {
+    align-items: center;
+    justify-content: space-between;
+    padding: 40px 24px 50px;
+    height: 100vh;
+    width: 100vw;
+    overflow: hidden; /* Guaranteed no scrolling on page one */
   }
 
-  .topbar{
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    padding: 30px 48px;
-    position:relative; z-index:2;
+  .nav-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
   }
 
-  .wordmark{
-    font-family:'DM Mono', monospace;
-    font-size:13px;
-    letter-spacing:0.18em;
-    color:var(--ink);
-    text-decoration:none;
-    background:none; border:none;
-    font-weight:500;
-  }
-  .wordmark span{ color:var(--muted); }
-
-  .social-row{
-    display:flex; align-items:center; gap:22px; flex-wrap:wrap;
-  }
-  .social-link{
-    font-family:'DM Mono', monospace;
-    font-size:10.5px;
-    letter-spacing:0.16em;
-    text-transform:uppercase;
-    color:var(--muted);
-    text-decoration:none;
-    border-bottom:1px solid transparent;
-    padding-bottom:2px;
-    transition:color .2s, border-color .2s;
-  }
-  .social-link:hover{ color:var(--ink); border-color:var(--ink); }
-  .dot{ width:3px; height:3px; border-radius:50%; background:var(--muted); opacity:.5; }
-
-  .hero-main{
-    flex:1;
-    display:grid;
-    grid-template-columns: 1.15fr 1fr;
-    grid-template-rows: auto 1fr;
-    grid-template-areas:
-      "name  bio"
-      "photo role";
-    gap: 24px 40px;
-    padding: 18px 48px 56px;
-    position:relative; z-index:2;
+  .social-row {
+    display: flex;
+    align-items: center;
+    gap: 24px;
   }
 
-  .name-block{ grid-area:name; align-self:start; }
-  .name-block h1{
-    font-family:'Archivo Black', sans-serif;
-    font-size:clamp(46px, 9.5vw, 132px);
-    line-height:0.92;
-    letter-spacing:-0.01em;
-    text-transform:uppercase;
+  .social-link {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    transition: color .2s;
   }
-  .eyebrow{
-    font-family:'Cormorant Garamond', serif;
-    font-style:italic;
-    font-weight:400;
-    font-size:clamp(13px,1.6vw,17px);
-    color:var(--muted);
-    margin-bottom:10px;
-    letter-spacing:0.02em;
+  .social-link:hover { color: var(--ink); }
+  .dot { width: 3px; height: 3px; border-radius: 50%; background: var(--muted); opacity: 0.4; }
+
+  .email-link {
+    font-size: 11px;
+    letter-spacing: 0.05em;
+    color: var(--muted);
+    transition: color 0.2s;
+  }
+  .email-link:hover { color: var(--ink); }
+
+  .profile-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 600px;
+    margin: auto 0;
+    width: 100%;
   }
 
-  .bio-block{
-    grid-area:bio;
-    align-self:start;
-    justify-self:end;
-    text-align:right;
-    max-width:480px;
-    padding-top:14px;
+  .profile-frame {
+    max-width: 130px;
+    width: 100%;
+    margin-bottom: 24px;
   }
-  .bio-block p{
-    font-family:'DM Mono', monospace;
-    font-size:clamp(10px,1.25vw,12.5px);
-    line-height:1.85;
-    letter-spacing:0.01em;
-    text-transform:uppercase;
-    color:var(--ink);
+  .profile-frame img {
+    width: 100%;
+    height: auto;
+    display: block;
+    object-fit: contain;
   }
 
-  .photo-block{
-    grid-area:photo;
-    align-self:end;
-    display:flex;
-    flex-direction:column;
-    gap:26px;
-  }
-  .photo-frame{
-    width:clamp(130px,18vw,210px);
-    aspect-ratio: 3/4;
-    overflow:hidden;
-    box-shadow:0 6px 28px rgba(0,0,0,0.14);
-  }
-  .photo-frame img{
-    width:100%; height:100%; object-fit:cover;
-    filter:sepia(6%) contrast(1.05) grayscale(8%);
-    display:block;
+  .bio-paragraph {
+    font-size: clamp(13px, 1.4vw, 14.5px); /* Perfectly balanced text size scaling up */
+    line-height: 1.7;
+    color: var(--ink);
+    font-weight: 400;
+    letter-spacing: -0.01em;
+    padding: 0 10px;
   }
 
-  .scroll-cue{
-    display:inline-flex;
-    align-items:center;
-    gap:12px;
-    background:none; border:none;
-    color:var(--ink);
-    padding:0;
-  }
-  .scroll-cue svg{
-    animation: cueBob 2.2s ease-in-out infinite;
-  }
-  @keyframes cueBob{
-    0%,100%{ transform:translateY(0); opacity:0.55; }
-    50%{ transform:translateY(7px); opacity:1; }
-  }
-  .scroll-cue-label{
-    font-family:'DM Mono', monospace;
-    font-size:10px;
-    letter-spacing:0.22em;
-    text-transform:uppercase;
-    color:var(--muted);
-    transition:color .2s;
-  }
-  .scroll-cue:hover .scroll-cue-label{ color:var(--ink); }
-
-  .role-block{
-    grid-area:role;
-    align-self:end;
-    justify-self:end;
-    text-align:right;
-  }
-  .role-block h2{
-    font-family:'Archivo Black', sans-serif;
-    font-size:clamp(28px,5.6vw,64px);
-    line-height:0.96;
-    text-transform:uppercase;
-    letter-spacing:-0.01em;
+  .project-nav-container {
+    width: 100%;
+    max-width: 400px;
   }
 
-  /* fade-up entrance, once */
-  .topbar, .name-block, .bio-block, .photo-block, .role-block{
-    animation: fadeUp .9s cubic-bezier(.16,1,.3,1) both;
-  }
-  .name-block{ animation-delay:.05s; }
-  .bio-block{ animation-delay:.12s; }
-  .photo-block{ animation-delay:.18s; }
-  .role-block{ animation-delay:.22s; }
-  @keyframes fadeUp{ from{opacity:0; transform:translateY(16px);} to{opacity:1; transform:translateY(0);} }
-
-  /* ════════════════ GALLERY / MUSEUM ════════════════ */
-  #gallery{
-    position:relative;
-    background:var(--ink);
-    color:var(--cream);
+  .project-buttons-grid {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 40px;
   }
 
-  .gallery-nav{
-    display:flex; align-items:center; justify-content:space-between;
-    padding:26px 48px;
-    border-bottom:1px solid var(--cream-line);
+  .action-btn {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding-bottom: 4px;
+    border-bottom: 1px solid var(--ink);
+    transition: opacity 0.2s;
   }
-  .gallery-nav .wordmark{ color:var(--cream); }
-  .gallery-nav .wordmark span{ color:rgba(240,235,226,.45); }
+  .action-btn:hover { opacity: 0.6; }
 
-  .top-link{
-    font-family:'DM Mono', monospace;
-    font-size:10px;
-    letter-spacing:0.2em;
-    text-transform:uppercase;
-    color:rgba(240,235,226,.55);
-    background:none;
-    border:1px solid rgba(240,235,226,.22);
-    padding:8px 18px;
-    text-decoration:none;
-    transition:all .2s;
-  }
-  .top-link:hover{ color:var(--cream); border-color:rgba(240,235,226,.55); }
-
-  .gallery-intro{
-    padding: 56px 48px 36px;
-    max-width: 760px;
-  }
-  .gallery-intro .eyebrow{ color:rgba(240,235,226,.55); margin-bottom:14px; }
-  .gallery-intro h3{
-    font-family:'Archivo Black', sans-serif;
-    font-size:clamp(28px,4.2vw,46px);
-    text-transform:uppercase;
-    line-height:1.05;
-    margin-bottom:18px;
-  }
-  .gallery-intro p{
-    font-family:'DM Mono', monospace;
-    font-size:11.5px;
-    line-height:1.85;
-    letter-spacing:0.01em;
-    color:rgba(240,235,226,.6);
-    text-transform:uppercase;
-    max-width:540px;
+  /* ════════════════ ART VIEW (BLACK) ════════════════ */
+  #art-view {
+    background: var(--dark-bg);
+    color: var(--cream);
   }
 
-  .art-wall{
-    display:grid;
-    grid-template-columns: repeat(4, 1fr);
-    grid-auto-rows: 230px;
-    grid-auto-flow: dense;
-    gap:4px;
-    padding:4px;
+  .art-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 30px 40px;
+    border-bottom: 1px solid var(--dark-line);
   }
 
-  .art-cell{
-    position:relative;
-    overflow:hidden;
-    cursor:pointer;
-    background:#1c1814;
+  .back-btn {
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(240,235,226,0.6);
+    transition: color 0.2s;
   }
-  .art-cell img{
-    width:100%; height:100%; object-fit:cover; display:block;
-    filter:grayscale(15%) contrast(1.02);
-    transition: transform .6s cubic-bezier(.25,.46,.45,.94), filter .4s;
-  }
-  .art-cell:hover img{ transform:scale(1.045); filter:grayscale(0%); }
+  .back-btn:hover { color: var(--cream); }
 
-  /* salon-hang rhythm — repeats every 6 items, scales automatically for however many pieces are added */
-  .art-wall .art-cell:nth-child(6n+1){ grid-column:span 2; grid-row:span 2; }
-  .art-wall .art-cell:nth-child(6n+4){ grid-row:span 2; }
-  .art-wall .art-cell:nth-child(6n+3){ grid-column:span 2; }
-
-  .placard{
-    position:absolute; inset:0;
-    display:flex; flex-direction:column; justify-content:flex-end;
-    padding:18px;
-    background:linear-gradient(to top, rgba(10,8,6,0.72) 0%, rgba(10,8,6,0) 48%);
-    opacity:0; transition:opacity .35s;
-  }
-  .art-cell:hover .placard{ opacity:1; }
-  .placard .plate-no{
-    font-family:'DM Mono', monospace;
-    font-size:10px;
-    letter-spacing:0.18em;
-    color:rgba(240,235,226,.7);
-    margin-bottom:4px;
-  }
-  .placard .plate-title{
-    font-family:'Cormorant Garamond', serif;
-    font-style:italic;
-    font-size:16px;
-    color:var(--cream);
+  .art-title {
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    font-weight: 500;
   }
 
-  .gallery-footer{
-    padding:54px 48px 48px;
-    display:flex; flex-direction:column; align-items:center; gap:22px;
-    border-top:1px solid var(--cream-line);
-    text-align:center;
+  .art-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 16px;
+    padding: 40px;
   }
-  .gallery-footer p{
-    font-family:'DM Mono', monospace;
-    font-size:10.5px;
-    letter-spacing:0.08em;
-    color:rgba(240,235,226,.5);
-    text-transform:uppercase;
+
+  .art-item {
+    position: relative;
+    aspect-ratio: 1;
+    overflow: hidden;
+    background: #151515;
+    cursor: pointer;
   }
-  .gallery-footer .social-row .social-link{ color:rgba(240,235,226,.55); }
-  .gallery-footer .social-row .social-link:hover{ color:var(--cream); border-color:var(--cream); }
-  .gallery-footer .dot{ background:rgba(240,235,226,.5); }
+
+  .art-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease, filter 0.3s;
+    filter: grayscale(15%);
+  }
+  .art-item:hover img { transform: scale(1.04); filter: grayscale(0%); }
 
   /* ════════════════ LIGHTBOX ════════════════ */
-  .lightbox{
-    display:none;
-    position:fixed; inset:0; z-index:999;
-    background:rgba(8,6,5,0.96);
-    align-items:center; justify-content:center;
+  .lightbox {
+    display: none;
+    position: fixed; inset: 0; z-index: 1000;
+    background: rgba(0,0,0,0.95);
+    align-items: center; justify-content: center;
+    padding: 40px;
   }
-  .lightbox.open{ display:flex; }
-  .lightbox-img{ max-width:90vw; max-height:86vh; object-fit:contain; display:block; }
-  .lightbox-cap{
-    position:fixed; bottom:30px; left:0; right:0; text-align:center;
-    font-family:'DM Mono', monospace; font-size:10px; letter-spacing:.18em;
-    text-transform:uppercase; color:rgba(240,235,226,.55);
-  }
-  .lightbox-close{
-    position:fixed; top:26px; right:36px;
-    background:none; border:none; color:rgba(240,235,226,.6);
-    font-size:30px; font-family:'Cormorant Garamond', serif; line-height:1;
-    transition:color .2s;
-  }
-  .lightbox-close:hover{ color:var(--cream); }
+  .lightbox.open { display: flex; }
+  .lightbox-img { max-width: 100%; max-height: 85vh; object-fit: contain; }
 
-  /* ════════════════ RESPONSIVE ════════════════ */
-  @media (max-width: 1023px){
-    .art-wall{ grid-template-columns: repeat(3,1fr); grid-auto-rows:200px; }
-    .art-wall .art-cell:nth-child(6n+1){ grid-column:span 2; grid-row:span 2; }
-    .art-wall .art-cell:nth-child(6n+3){ grid-column:span 1; }
+  .lightbox-close {
+    position: fixed; top: 30px; right: 40px;
+    font-size: 28px;
+    color: rgba(240,235,226,0.6);
+    transition: color 0.2s;
   }
+  .lightbox-close:hover { color: var(--cream); }
 
-  @media (max-width: 880px){
-    .hero-main{
-      grid-template-columns: 1fr;
-      grid-template-areas:
-        "name"
-        "bio"
-        "photo"
-        "role";
-      gap:34px;
-      padding: 10px 32px 48px;
-    }
-    .bio-block{ justify-self:start; text-align:left; max-width:100%; }
-    .role-block{ justify-self:start; text-align:left; }
-    .topbar{ padding:26px 32px; }
-  }
-
-  @media (max-width:640px){
-    .topbar{ flex-direction:column; align-items:flex-start; gap:14px; padding:24px 22px; }
-    .social-row{ gap:14px; }
-    .hero-main{ padding:6px 22px 44px; }
-    .name-block h1{ font-size:clamp(40px,14vw,64px); }
-    .role-block h2{ font-size:clamp(26px,9vw,38px); }
-    .photo-frame{ width:38vw; }
-    .gallery-nav{ padding:22px; }
-    .gallery-intro{ padding:44px 22px 28px; }
-    .art-wall{
-      grid-template-columns:1fr;
-      grid-auto-rows: 78vw;
-      gap:3px; padding:3px;
-    }
-    .art-wall .art-cell:nth-child(n){ grid-column:span 1 !important; grid-row:span 1 !important; }
-    .placard{ opacity:1; background:linear-gradient(to top, rgba(10,8,6,0.62) 0%, rgba(10,8,6,0) 60%); }
-    .gallery-footer{ padding:44px 22px 40px; }
+  /* Responsive Scaling Safeguards for Non-Scrolling Main Page Viewport */
+  @media (max-width: 640px) {
+    .art-header { padding: 24px 20px; }
+    .art-grid { padding: 20px; gap: 10px; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); }
+    .project-buttons-grid { gap: 32px; }
+    #main-view { padding: 24px 16px 36px; }
+    .bio-paragraph { font-size: 12px; line-height: 1.6; padding: 0; }
+    .profile-frame { max-width: 100px; margin-bottom: 16px; }
+    .social-row { gap: 16px; }
   }
 </style>
 </head>
@@ -389,126 +227,98 @@
 
 <div class="grain"></div>
 
-<!-- ══════════════ HERO ══════════════ -->
-<section id="hero">
+<!-- ══════════════ PORTFOLIO MAIN PAGE (CREAM / FIXED RESPONSIVE VIEWPORT) ══════════════ -->
+<main id="main-view" class="view active">
 
-  <div class="topbar">
-    <a href="#hero" class="wordmark">B<span>·</span>BARZINJI</a>
+  <!-- Navigation Header Links -->
+  <header class="nav-header">
     <div class="social-row">
       <a class="social-link" href="https://instagram.com/BerwanBarzinji" target="_blank" rel="noopener">Instagram</a>
       <span class="dot"></span>
-      <a class="social-link" href="https://x.com/BerwanBarzinji" target="_blank" rel="noopener">Twitter / X</a>
+      <a class="social-link" href="https://x.com/BerwanBarzinji" target="_blank" rel="noopener">Twitter</a>
       <span class="dot"></span>
       <a class="social-link" href="https://t.me/+1jB6Ldg0YQM0MmYy" target="_blank" rel="noopener">Telegram</a>
-      <span class="dot"></span>
-      <a class="social-link" href="mailto:berwan1998@gmail.com">berwan1998@gmail.com</a>
     </div>
-  </div>
+    <a class="email-link" href="mailto:berwan1998@gmail.com">berwan1998@gmail.com</a>
+  </header>
 
-  <div class="hero-main">
-
-    <div class="name-block">
-      <p class="eyebrow">Portfolio — Est. 2026</p>
-      <h1>Berwan<br>Barzinji</h1>
+  <!-- Profile Section with Highly Legible Custom Bio Narrative -->
+  <section class="profile-section">
+    <div class="profile-frame">
+      <img src="berwan.jpg" alt="Berwan Farhad">
     </div>
-
-    <div class="bio-block">
-      <p>
-        Engineer by training, creator by nature. I move between structured
-        problem-solving and 3D art and design — always building something,
-        currently exploring where craft meets AI. The tools change. The
-        curiosity doesn't.
-      </p>
+    <div class="bio-paragraph">
+      I'm Berwan Farhad, a Communication Engineer driven by technology, innovation, and the pursuit of better solutions. My experience spans telecommunications, networking, software development, and data-driven projects, where I combine technical expertise with creative thinking to tackle complex challenges. I am passionate about building impactful technologies and continuously expanding my knowledge in a rapidly evolving industry.
     </div>
+  </section>
 
-    <div class="photo-block">
-      <div class="photo-frame">
-        <img src="berwan.jpg" alt="Portrait of Berwan Barzinji">
-      </div>
-      <button class="scroll-cue" aria-label="Scroll to the gallery" onclick="document.getElementById('gallery').scrollIntoView({behavior:'smooth'})">
-        <svg width="26" height="46" viewBox="0 0 26 46" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <line x1="13" y1="0" x2="13" y2="34" stroke="currentColor" stroke-width="1.3"/>
-          <path d="M3 26 L13 36 L23 26" stroke="currentColor" stroke-width="1.3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-        <span class="scroll-cue-label">Scroll</span>
-      </button>
+  <!-- Balanced Bottom Nav Controls -->
+  <footer class="project-nav-container">
+    <div class="project-buttons-grid">
+      <button class="action-btn" onclick="switchView('art-view')">Art Works</button>
+      <a class="action-btn" href="https://website-delta-seven-74.vercel.app/" target="_blank" rel="noopener">Project (Loading)</a>
     </div>
+  </footer>
 
-    <div class="role-block">
-      <h2>Engineer &<br>Creative Designer</h2>
-    </div>
+</main>
 
-  </div>
-</section>
+<!-- ══════════════ ART PROJECTS GALLERY VIEW (ALL BLACK) ══════════════ -->
+<section id="art-view" class="view">
 
-<!-- ══════════════ GALLERY / MUSEUM ══════════════ -->
-<section id="gallery">
+  <header class="art-header">
+    <button class="back-btn" onclick="switchView('main-view')">← Back</button>
+    <h2 class="art-title">Art</h2>
+    <div style="width: 45px; opacity:0;"></div>
+  </header>
 
-  <div class="gallery-nav">
-    <a href="#hero" class="wordmark">B<span>·</span>BARZINJI</a>
-    <a href="#hero" class="top-link">↑ Top</a>
-  </div>
-
-  <div class="gallery-intro">
-    <p class="eyebrow">Selected Works — 2020 / 2022</p>
-    <h3>The Gallery</h3>
-    <p>A collection of 3D art and design studies — explorations in form, light, and material, gathered here as they were made.</p>
-  </div>
-
-  <div class="art-wall">
-    <div class="art-cell"><img src="art1.jpg" alt="Artwork 1"><div class="placard"><span class="plate-no">PLATE 01</span><span class="plate-title">Untitled</span></div></div>
-    <div class="art-cell"><img src="art2.jpg" alt="Artwork 2"><div class="placard"><span class="plate-no">PLATE 02</span><span class="plate-title">Untitled</span></div></div>
-    <div class="art-cell"><img src="art3.jpg" alt="Artwork 3"><div class="placard"><span class="plate-no">PLATE 03</span><span class="plate-title">Untitled</span></div></div>
-    <div class="art-cell"><img src="art4.jpg" alt="Artwork 4"><div class="placard"><span class="plate-no">PLATE 04</span><span class="plate-title">Untitled</span></div></div>
-    <div class="art-cell"><img src="art5.jpg" alt="Artwork 5"><div class="placard"><span class="plate-no">PLATE 05</span><span class="plate-title">Untitled</span></div></div>
-    <div class="art-cell"><img src="art6.jpg" alt="Artwork 6"><div class="placard"><span class="plate-no">PLATE 06</span><span class="plate-title">Untitled</span></div></div>
-    <div class="art-cell"><img src="art7.jpg" alt="Artwork 7"><div class="placard"><span class="plate-no">PLATE 07</span><span class="plate-title">Untitled</span></div></div>
-    <div class="art-cell"><img src="art8.jpg" alt="Artwork 8"><div class="placard"><span class="plate-no">PLATE 08</span><span class="plate-title">Untitled</span></div></div>
-    <div class="art-cell"><img src="art9.jpg" alt="Artwork 9"><div class="placard"><span class="plate-no">PLATE 09</span><span class="plate-title">Untitled</span></div></div>
-    <div class="art-cell"><img src="art10.jpg" alt="Artwork 10"><div class="placard"><span class="plate-no">PLATE 10</span><span class="plate-title">Untitled</span></div></div>
-    <div class="art-cell"><img src="art11.jpg" alt="Artwork 11"><div class="placard"><span class="plate-no">PLATE 11</span><span class="plate-title">Untitled</span></div></div>
-    <div class="art-cell"><img src="art12.jpg" alt="Artwork 12"><div class="placard"><span class="plate-no">PLATE 12</span><span class="plate-title">Untitled</span></div></div>
-  </div>
-
-  <div class="gallery-footer">
-    <p>Berwan Barzinji — Engineer Creative Designer</p>
-    <div class="social-row">
-      <a class="social-link" href="https://instagram.com/B3rwan" target="_blank" rel="noopener">Instagram</a>
-      <span class="dot"></span>
-      <a class="social-link" href="https://x.com/BerwanBarzinji" target="_blank" rel="noopener">Twitter / X</a>
-      <span class="dot"></span>
-      <a class="social-link" href="https://t.me/+1jB6Ldg0YQM0MmYy" target="_blank" rel="noopener">Telegram</a>
-      <span class="dot"></span>
-      <a class="social-link" href="mailto:berwan1998@gmail.com">salihberwan@gmail.com</a>
-    </div>
+  <div class="art-grid">
+    <div class="art-item"><img src="art1.jpg" alt="Artwork 01"></div>
+    <div class="art-item"><img src="art2.jpg" alt="Artwork 02"></div>
+    <div class="art-item"><img src="art3.jpg" alt="Artwork 03"></div>
+    <div class="art-item"><img src="art4.jpg" alt="Artwork 04"></div>
+    <div class="art-item"><img src="art5.jpg" alt="Artwork 05"></div>
+    <div class="art-item"><img src="art6.jpg" alt="Artwork 06"></div>
+    <div class="art-item"><img src="art7.jpg" alt="Artwork 07"></div>
+    <div class="art-item"><img src="art8.jpg" alt="Artwork 08"></div>
+    <div class="art-item"><img src="art9.jpg" alt="Artwork 09"></div>
+    <div class="art-item"><img src="art10.jpg" alt="Artwork 10"></div>
+    <div class="art-item"><img src="art11.jpg" alt="Artwork 11"></div>
+    <div class="art-item"><img src="art12.jpg" alt="Artwork 12"></div>
   </div>
 
 </section>
 
-<!-- ══════════════ LIGHTBOX ══════════════ -->
+<!-- ══════════════ INTERACTIVE LIGHTBOX VIEW SCREEN ══════════════ -->
 <div class="lightbox" id="lightbox">
   <button class="lightbox-close" aria-label="Close" onclick="closeLightbox()">×</button>
   <img class="lightbox-img" id="lightbox-img" src="" alt="">
-  <div class="lightbox-cap" id="lightbox-cap"></div>
 </div>
 
 <script>
-  document.querySelectorAll('.art-cell').forEach((cell, i) => {
-    cell.addEventListener('click', () => {
-      const img = cell.querySelector('img');
-      const plateNo = cell.querySelector('.plate-no')?.textContent || '';
-      document.getElementById('lightbox-img').src = img.src;
-      document.getElementById('lightbox-img').alt = img.alt;
-      document.getElementById('lightbox-cap').textContent = plateNo;
+  // Dynamic Page Transition Logic
+  function switchView(viewId) {
+    document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+    document.getElementById(viewId).classList.add('active');
+    window.scrollTo({ top: 0 });
+  }
+
+  // Lightbox View Activation
+  document.querySelectorAll('.art-item').forEach(item => {
+    item.addEventListener('click', () => {
+      const targetImgSrc = item.querySelector('img').src;
+      const targetImgAlt = item.querySelector('img').alt;
+
+      document.getElementById('lightbox-img').src = targetImgSrc;
+      document.getElementById('lightbox-img').alt = targetImgAlt;
       document.getElementById('lightbox').classList.add('open');
     });
   });
 
-  function closeLightbox(){
+  function closeLightbox() {
     document.getElementById('lightbox').classList.remove('open');
   }
 
-  document.getElementById('lightbox').addEventListener('click', function(e){
+  document.getElementById('lightbox').addEventListener('click', function(e) {
     if (e.target === this) closeLightbox();
   });
 
