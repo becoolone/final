@@ -4,10 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Berwan Farhad</title>
-  <link rel="icon" type="image/jpeg" href="bb.jpg">
+<link rel="icon" type="image/jpeg" href="bb.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<!-- Using Inter for maximum readability, clean aesthetics, and excellent responsiveness across all screens -->
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
 
 <style>
@@ -32,7 +31,7 @@
   a { color: inherit; text-decoration: none; }
   button { font: inherit; background: none; border: none; cursor: pointer; color: inherit; }
 
-  /* Premium Grain Overlay Overlay */
+  /* Premium Grain Overlay */
   .grain {
     position: fixed; inset: 0; pointer-events: none; z-index: 99; opacity: 0.045;
     background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
@@ -49,7 +48,7 @@
     padding: 40px 24px 50px;
     height: 100vh;
     width: 100vw;
-    overflow: hidden; /* Guaranteed no scrolling on page one */
+    overflow: hidden; /* Perfect viewport lock */
   }
 
   .nav-header {
@@ -89,13 +88,16 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
     max-width: 600px;
     margin: auto 0;
     width: 100%;
+    text-align: center;
   }
 
+  /* Made the image frame a little bit bigger as requested */
   .profile-frame {
-    max-width: 130px;
+    max-width: 155px;
     width: 100%;
     margin-bottom: 24px;
   }
@@ -107,12 +109,13 @@
   }
 
   .bio-paragraph {
-    font-size: clamp(13px, 1.4vw, 14.5px); /* Perfectly balanced text size scaling up */
-    line-height: 1.7;
+    font-size: clamp(14px, 1.5vw, 15px); /* Highly legible standard size, matches sizing across viewports */
+    line-height: 1.75;
     color: var(--ink);
     font-weight: 400;
     letter-spacing: -0.01em;
     padding: 0 10px;
+    text-align: center;
   }
 
   .project-nav-container {
@@ -142,14 +145,24 @@
   #art-view {
     background: var(--dark-bg);
     color: var(--cream);
+    padding-top: 80px; /* Secure padding clearance for the fixed header overlay */
   }
 
+  /* Fixed sticky header to stay locked at the top during scrolling updates */
   .art-header {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 30px 40px;
+    padding: 24px 40px;
     border-bottom: 1px solid var(--dark-line);
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 10;
+    background: rgba(10, 10, 10, 0.85);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
   }
 
   .back-btn {
@@ -211,15 +224,23 @@
   }
   .lightbox-close:hover { color: var(--cream); }
 
-  /* Responsive Scaling Safeguards for Non-Scrolling Main Page Viewport */
+  /* Responsive Rules */
   @media (max-width: 640px) {
-    .art-header { padding: 24px 20px; }
+    .art-header { padding: 20px; }
     .art-grid { padding: 20px; gap: 10px; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); }
     .project-buttons-grid { gap: 32px; }
-    #main-view { padding: 24px 16px 36px; }
-    .bio-paragraph { font-size: 12px; line-height: 1.6; padding: 0; }
-    .profile-frame { max-width: 100px; margin-bottom: 16px; }
+    #main-view { padding: 30px 20px 40px; }
+
+    /* Kept text perfectly centered and readable on mobile layouts */
+    .bio-paragraph {
+      font-size: 14px;
+      line-height: 1.65;
+      padding: 0;
+      text-align: center;
+    }
+    .profile-frame { max-width: 125px; margin-bottom: 20px; }
     .social-row { gap: 16px; }
+    #art-view { padding-top: 65px; }
   }
 </style>
 </head>
@@ -233,7 +254,7 @@
   <!-- Navigation Header Links -->
   <header class="nav-header">
     <div class="social-row">
-      <a class="social-link" href="https://instagram.com/BerwanBarzinji" target="_blank" rel="noopener">Instagram</a>
+      <a class="social-link" href="https://instagram.com/B3rwan" target="_blank" rel="noopener">Instagram</a>
       <span class="dot"></span>
       <a class="social-link" href="https://x.com/BerwanBarzinji" target="_blank" rel="noopener">Twitter</a>
       <span class="dot"></span>
@@ -265,12 +286,14 @@
 <!-- ══════════════ ART PROJECTS GALLERY VIEW (ALL BLACK) ══════════════ -->
 <section id="art-view" class="view">
 
+  <!-- Sticky Locked Header Frame -->
   <header class="art-header">
     <button class="back-btn" onclick="switchView('main-view')">← Back</button>
     <h2 class="art-title">Art</h2>
     <div style="width: 45px; opacity:0;"></div>
   </header>
 
+  <!-- Array reduced to 9 elements as requested -->
   <div class="art-grid">
     <div class="art-item"><img src="art1.jpg" alt="Artwork 01"></div>
     <div class="art-item"><img src="art2.jpg" alt="Artwork 02"></div>
@@ -281,9 +304,6 @@
     <div class="art-item"><img src="art7.jpg" alt="Artwork 07"></div>
     <div class="art-item"><img src="art8.jpg" alt="Artwork 08"></div>
     <div class="art-item"><img src="art9.jpg" alt="Artwork 09"></div>
-    <div class="art-item"><img src="art10.jpg" alt="Artwork 10"></div>
-    <div class="art-item"><img src="art11.jpg" alt="Artwork 11"></div>
-    <div class="art-item"><img src="art12.jpg" alt="Artwork 12"></div>
   </div>
 
 </section>
