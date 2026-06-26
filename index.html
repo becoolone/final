@@ -20,16 +20,28 @@
     --dark-line: rgba(240,235,226,0.15);
   }
 
+  html { height: 100%; }
+
   body {
     background: var(--cream);
     color: var(--ink);
     font-family: 'Inter', sans-serif;
     overflow-x: hidden;
     min-height: 100vh;
+    overscroll-behavior: none;
   }
 
   a { color: inherit; text-decoration: none; }
   button { font: inherit; background: none; border: none; cursor: pointer; color: inherit; }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { transition-duration: 0.001ms !important; animation-duration: 0.001ms !important; }
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--ink);
+    outline-offset: 3px;
+  }
 
   /* Premium Grain Overlay */
   .grain {
@@ -47,6 +59,7 @@
     justify-content: space-between;
     padding: 40px 24px 50px;
     height: 100vh;
+    height: 100dvh; /* locks to the real visible viewport on mobile, ignoring the address-bar resize that causes phantom scroll with plain vh */
     width: 100vw;
     overflow: hidden; /* Perfect viewport lock */
   }
@@ -130,6 +143,7 @@
     gap: 40px;
   }
 
+  /* Outer capsule outline removed; styled cleanly with an elegant line underneath the text */
   .action-btn {
     font-size: 11px;
     font-weight: 500;
@@ -137,9 +151,10 @@
     text-transform: uppercase;
     padding-bottom: 4px;
     border-bottom: 1px solid var(--ink);
-    transition: opacity 0.2s;
+    transition: opacity 0.2s ease, transform 0.15s ease;
   }
   .action-btn:hover { opacity: 0.6; }
+  .action-btn:active { transform: scale(0.97); }
 
   /* ════════════════ ART VIEW (BLACK) ════════════════ */
   #art-view {
@@ -241,6 +256,19 @@
     .profile-frame { max-width: 125px; margin-bottom: 20px; }
     .social-row { gap: 16px; }
     #art-view { padding-top: 65px; }
+  }
+
+  /* Extra safety net for short/small phone screens so the bio + image + buttons
+     always fit inside one viewport with zero scroll, even with the address bar showing */
+  @media (max-height: 700px) {
+    #main-view { padding: 22px 20px 28px; }
+    .nav-header { gap: 6px; }
+    .profile-frame { max-width: 100px; margin-bottom: 16px; }
+    .bio-paragraph { font-size: 13px; line-height: 1.55; }
+  }
+  @media (max-height: 580px) {
+    .profile-frame { max-width: 80px; margin-bottom: 12px; }
+    .bio-paragraph { font-size: 12.5px; line-height: 1.45; }
   }
 </style>
 </head>
