@@ -2,378 +2,384 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Berwan Farhad</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Berwan Barzinji</title>
 <link rel="icon" type="image/jpeg" href="bb.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
-
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500&display=swap" rel="stylesheet">
 <style>
-  *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#fff;--ink:#0d0d0d;--muted:#8c8c8c;--line:rgba(0,0,0,.12);--ease:cubic-bezier(.65,0,.2,1)}
+html{height:100%;-webkit-text-size-adjust:100%}
+body{background:var(--bg);color:var(--ink);font-family:'Inter',system-ui,sans-serif;font-weight:300;overflow-x:hidden;min-height:100vh;overscroll-behavior:none}
+a{color:inherit;text-decoration:none}
+button{font:inherit;background:none;border:none;cursor:pointer;color:inherit}
+:focus-visible{outline:1px solid currentColor;outline-offset:4px}
+::selection{background:var(--ink);color:#fff}
 
-  :root {
-    --cream: #f0ebe2;
-    --ink: #15120f;
-    --muted: #8a8378;
-    --dark-bg: #0a0a0a;
-    --dark-line: rgba(240,235,226,0.15);
-  }
+.curtain{position:fixed;inset:0;background:var(--ink);z-index:150;transform:translateY(100%);pointer-events:none}
+.curtain.in{transition:transform .5s var(--ease);transform:translateY(0)}
+.curtain.out{transition:transform .5s var(--ease);transform:translateY(-100%)}
 
-  html { height: 100%; }
+.view{display:none;min-height:100vh;width:100%;position:relative}
+.view.active{display:flex;flex-direction:column}
+.rv{opacity:0;transform:translateY(10px)}
+.active .rv{animation:rise .9s var(--ease) forwards;animation-delay:calc(var(--i,0)*90ms + 200ms)}
+@keyframes rise{to{opacity:1;transform:none}}
 
-  body {
-    background: var(--cream);
-    color: var(--ink);
-    font-family: 'Inter', sans-serif;
-    overflow-x: hidden;
-    min-height: 100vh;
-    overscroll-behavior: none;
-  }
+.ln{position:relative;display:inline-block;padding-bottom:3px}
+.ln::after{content:"";position:absolute;left:0;bottom:0;width:100%;height:1px;background:currentColor;transform:scaleX(0);transform-origin:right;transition:transform .5s var(--ease)}
+.ln:hover::after,.ln:focus-visible::after{transform:scaleX(1);transform-origin:left}
 
-  a { color: inherit; text-decoration: none; }
-  button { font: inherit; background: none; border: none; cursor: pointer; color: inherit; }
+/* HOME */
+#home{height:100vh;height:100dvh;overflow:hidden;align-items:center;justify-content:space-between;padding:calc(30px + env(safe-area-inset-top,0px)) 32px calc(28px + env(safe-area-inset-bottom,0px))}
+.top{width:100%;display:flex;justify-content:space-between;gap:14px 30px;flex-wrap:wrap;font-size:13px}
+.top div{display:flex;gap:26px}
+.tnav{display:flex;gap:26px}
+.top .soc{color:var(--muted)}
+.top .soc a{transition:color .3s}.top .soc a:hover{color:var(--ink)}
+.top button{font-weight:400}
 
-  @media (prefers-reduced-motion: reduce) {
-    * { transition-duration: 0.001ms !important; animation-duration: 0.001ms !important; }
-  }
+.center{display:flex;flex-direction:column;align-items:center;text-align:center;width:100%;margin:auto 0}
+.hi{font-size:clamp(15px,2vw,19px);font-weight:300;color:var(--muted);margin-bottom:6px;letter-spacing:-.01em}
+.hi span{display:inline-block;color:var(--ink);transition:opacity .35s,transform .35s var(--ease)}
+.hi span.swap{opacity:0;transform:translateY(8px)}
+h1{font-weight:200;font-size:clamp(32px,9.4vw,124px);line-height:1.02;letter-spacing:-.05em;white-space:nowrap;margin-bottom:28px;cursor:default}
+h1 .c{display:inline-block;transition:transform .35s var(--ease),opacity .35s;will-change:transform}
+.bio{font-size:15px;line-height:1.75;color:#4d4d4d;max-width:470px;letter-spacing:-.005em;margin-bottom:34px}
+.btns{display:flex;gap:12px;flex-wrap:wrap;justify-content:center}
+.btn{padding:15px 30px;border-radius:99px;font-size:14px;font-weight:400;border:1px solid var(--ink);transition:background .4s,color .4s,transform .25s var(--ease)}
+.btn:active{transform:scale(.96)}
+.btn.dark{background:var(--ink);color:#fff}
+.btn.dark:hover{background:#fff;color:var(--ink)}
+.btn.light{background:#fff;color:var(--ink)}
+.btn.light:hover{background:var(--ink);color:#fff}
+.foot{font-size:12px;color:var(--muted);letter-spacing:.01em}
 
-  :focus-visible {
-    outline: 2px solid var(--ink);
-    outline-offset: 3px;
-  }
+/* MOBILE MENU */
+.burger,.mclose{display:none;width:28px;height:20px;position:relative}
+.burger i,.mclose i{position:absolute;left:0;height:1px;background:var(--ink);transition:transform .5s var(--ease),width .4s var(--ease)}
+.burger i:nth-child(1){top:5px;width:100%}.burger i:nth-child(2){top:14px;width:58%}
+.burger:hover i:nth-child(2){width:100%}
+.mclose i{top:10px;width:100%}.mclose i:nth-child(1){transform:rotate(45deg)}.mclose i:nth-child(2){transform:rotate(-45deg)}
+.mclose:hover i{transform:rotate(0)}
+.menu{display:none}
+.mnav{display:flex;flex-direction:column;align-items:flex-start;margin:auto 0}
+.mnav button{font-size:clamp(42px,13vw,60px);font-weight:200;letter-spacing:-.045em;line-height:1.15;padding:4px 0;opacity:0;text-align:left}
+.menu.open .mnav button{animation:rise .8s var(--ease) forwards;animation-delay:calc(var(--i)*70ms + 280ms)}
+.msoc{display:flex;justify-content:space-between;align-items:center;font-size:13px;color:var(--muted);border-top:1px solid var(--line);padding-top:20px;opacity:0}
+.menu.open .msoc{animation:rise .8s var(--ease) .65s forwards}
+.msoc a{transition:color .3s}.msoc a:hover{color:var(--ink)}
 
-  /* Premium Grain Overlay */
-  .grain {
-    position: fixed; inset: 0; pointer-events: none; z-index: 99; opacity: 0.045;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-  }
+.back{display:inline-flex;align-items:center;gap:9px;font-weight:400;font-size:14px}
+.back svg{flex:none;transition:transform .45s var(--ease)}
+.back:hover svg{transform:translateX(-5px)}
+/* SUB VIEWS */
+.bar{position:fixed;top:0;left:0;right:0;z-index:20;display:flex;justify-content:space-between;align-items:center;padding:calc(24px + env(safe-area-inset-top,0px)) 40px 22px;font-size:13px;background:rgba(255,255,255,.85);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px)}
+.bar .t{color:var(--muted)}
+.wrap{padding:150px 40px 100px;max-width:980px;width:100%;margin:0 auto}
+.lead{font-weight:200;font-size:clamp(34px,6vw,64px);letter-spacing:-.04em;line-height:1.02;margin-bottom:70px;max-width:14em}
+.lead em{font-style:normal;color:var(--muted)}
 
-  /* Views Management */
-  .view { display: none; min-height: 100vh; width: 100%; position: relative; }
-  .view.active { display: flex; flex-direction: column; }
+.list{border-top:1px solid var(--line)}
+.list:hover .proj:not(:hover){opacity:.3}
 
-  /* ════════════════ MAIN VIEW (CREAM - NO SCROLL) ════════════════ */
-  #main-view {
-    align-items: center;
-    justify-content: space-between;
-    padding: 40px 24px 50px;
-    height: 100vh;
-    height: 100dvh; /* locks to the real visible viewport on mobile, ignoring the address-bar resize that causes phantom scroll with plain vh */
-    width: 100vw;
-    overflow: hidden; /* Perfect viewport lock */
-  }
+.proj{display:flex;align-items:center;padding:34px 0;border-bottom:1px solid var(--line);transition:opacity .4s,padding .6s var(--ease)}
+.proj:hover,.proj:focus-visible{padding-top:46px;padding-bottom:46px}
+.shot{flex:none;width:0;margin-right:0;opacity:0;transform:translateX(-30px);overflow:hidden;border-radius:6px;transition:width .7s var(--ease),margin .7s var(--ease),opacity .5s,transform .7s var(--ease)}
+.proj:hover .shot,.proj:focus-visible .shot{width:280px;margin-right:32px;opacity:1;transform:none}
+.fs{width:280px;aspect-ratio:16/9;display:grid;place-items:center;font-size:11px;color:var(--muted);background:center/cover no-repeat repeating-linear-gradient(135deg,rgba(0,0,0,.045) 0 1px,transparent 1px 12px),#f3f3f3}
+.fs.has span{display:none}
+.proj h3{flex:0 0 22%;padding-right:16px;font-weight:300;font-size:clamp(22px,3vw,32px);letter-spacing:-.03em}
+.txt{flex:1;min-width:0}
+.one{font-size:16px;font-weight:500;line-height:1.5;letter-spacing:-.015em}
+.more{display:grid;grid-template-rows:0fr;opacity:0;margin-top:0;transition:grid-template-rows .6s var(--ease),opacity .5s,margin-top .6s var(--ease)}
+.more p{overflow:hidden;min-height:0;font-size:12.5px;line-height:1.65;color:var(--muted)}
+.proj:hover .more,.proj:focus-visible .more{grid-template-rows:1fr;opacity:1;margin-top:8px}
+.go{flex:none;margin-left:24px;font-size:13px;white-space:nowrap}
+.go b{display:inline-block;font-weight:300;transition:transform .5s var(--ease)}
+.proj:hover .go b{transform:translate(4px,-4px)}
+.cv{display:grid;grid-template-columns:200px 1fr;gap:20px 40px;border-top:1px solid var(--line);padding:32px 0}
+.cv h2{font-size:13px;font-weight:400;color:var(--muted)}
+.cv ul{list-style:none;display:grid;gap:22px}
+.cv li b{display:block;font-weight:400;font-size:17px;letter-spacing:-.02em;margin-bottom:4px}
+.cv li span{font-size:14px;color:var(--muted);line-height:1.6}
+.cv li span{display:block}.cv li span+span{margin-top:6px}
+.kv{display:grid;grid-template-columns:110px 1fr;gap:12px 20px;font-size:14px;line-height:1.6}
+.kv dt{color:var(--muted)}.kv dd{color:var(--ink)}
+.prose{font-size:16px;line-height:1.75;letter-spacing:-.01em;max-width:34em}
+.chips{display:flex;flex-wrap:wrap;gap:10px}
+.chips span{font-size:13px;padding:7px 14px;border:1px solid var(--line);border-radius:99px;transition:background .3s,color .3s}
+.chips span:hover{background:var(--ink);color:#fff}
+.dl{margin-top:50px;font-size:14px;font-weight:400}
 
-  .nav-header {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 8px;
-    width: 100%;
-  }
+.mail{display:inline-block;font-weight:200;font-size:clamp(26px,6.2vw,70px);letter-spacing:-.045em;line-height:1.1;word-break:break-all}
+.links{display:flex;gap:34px;margin-top:50px;font-size:15px;font-weight:400;flex-wrap:wrap}
+.copy{margin-top:26px;font-size:12px;color:var(--muted);min-height:1em}
 
-  .social-row {
-    display: flex;
-    align-items: center;
-    gap: 24px;
-  }
+#art{background:#0a0a0a;color:#fff}
+#art .bar{background:rgba(10,10,10,.85);border-bottom:1px solid rgba(255,255,255,.12)}
+#art .bar .t{color:rgba(255,255,255,.5)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;padding:100px 40px 40px}
+.item{position:relative;aspect-ratio:1;overflow:hidden;background:#151515;cursor:pointer}
+.item img{width:100%;height:100%;object-fit:cover;filter:grayscale(.2) brightness(.9);transition:transform .8s var(--ease),filter .5s}
+.item:hover img{transform:scale(1.05);filter:none}
+.note{padding:0 40px 80px;font-size:13px;color:rgba(255,255,255,.45)}
+.lb{display:none;position:fixed;inset:0;z-index:300;background:rgba(0,0,0,.96);align-items:center;justify-content:center;padding:40px}
+.lb.open{display:flex;animation:fade .4s}
+@keyframes fade{from{opacity:0}}
+.lb img{max-width:100%;max-height:86vh;object-fit:contain}
+.lb button{position:fixed;color:rgba(255,255,255,.6);font-size:13px;transition:color .2s}
+.lb button:hover{color:#fff}
+.lb .x{top:28px;right:40px}.lb .p{left:40px;bottom:30px}.lb .n{right:40px;bottom:30px}
 
-  .social-link {
-    font-size: 11px;
-    font-weight: 500;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--muted);
-    transition: color .2s;
-  }
-  .social-link:hover { color: var(--ink); }
-  .dot { width: 3px; height: 3px; border-radius: 50%; background: var(--muted); opacity: 0.4; }
-
-  .email-link {
-    font-size: 11px;
-    letter-spacing: 0.05em;
-    color: var(--muted);
-    transition: color 0.2s;
-  }
-  .email-link:hover { color: var(--ink); }
-
-  .profile-section {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    max-width: 600px;
-    margin: auto 0;
-    width: 100%;
-    text-align: center;
-  }
-
-  /* Made the image frame a little bit bigger as requested */
-  .profile-frame {
-    max-width: 155px;
-    width: 100%;
-    margin-bottom: 24px;
-  }
-  .profile-frame img {
-    width: 100%;
-    height: auto;
-    display: block;
-    object-fit: contain;
-  }
-
-  .bio-paragraph {
-    font-size: clamp(14px, 1.5vw, 15px); /* Highly legible standard size, matches sizing across viewports */
-    line-height: 1.75;
-    color: var(--ink);
-    font-weight: 400;
-    letter-spacing: -0.01em;
-    padding: 0 10px;
-    text-align: center;
-  }
-
-  .project-nav-container {
-    width: 100%;
-    max-width: 400px;
-  }
-
-  .project-buttons-grid {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 40px;
-  }
-
-  /* Outer capsule outline removed; styled cleanly with an elegant line underneath the text */
-  .action-btn {
-    font-size: 11px;
-    font-weight: 500;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    padding-bottom: 4px;
-    border-bottom: 1px solid var(--ink);
-    transition: opacity 0.2s ease, transform 0.15s ease;
-  }
-  .action-btn:hover { opacity: 0.6; }
-  .action-btn:active { transform: scale(0.97); }
-
-  /* ════════════════ ART VIEW (BLACK) ════════════════ */
-  #art-view {
-    background: var(--dark-bg);
-    color: var(--cream);
-    padding-top: 80px; /* Secure padding clearance for the fixed header overlay */
-  }
-
-  /* Fixed sticky header to stay locked at the top during scrolling updates */
-  .art-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 24px 40px;
-    border-bottom: 1px solid var(--dark-line);
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 10;
-    background: rgba(10, 10, 10, 0.85);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-  }
-
-  .back-btn {
-    font-size: 11px;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: rgba(240,235,226,0.6);
-    transition: color 0.2s;
-  }
-  .back-btn:hover { color: var(--cream); }
-
-  .art-title {
-    font-size: 11px;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    font-weight: 500;
-  }
-
-  .art-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 16px;
-    padding: 40px;
-  }
-
-  .art-item {
-    position: relative;
-    aspect-ratio: 1;
-    overflow: hidden;
-    background: #151515;
-    cursor: pointer;
-  }
-
-  .art-item img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 0.5s ease, filter 0.3s;
-    filter: grayscale(15%);
-  }
-  .art-item:hover img { transform: scale(1.04); filter: grayscale(0%); }
-
-  /* ════════════════ LIGHTBOX ════════════════ */
-  .lightbox {
-    display: none;
-    position: fixed; inset: 0; z-index: 1000;
-    background: rgba(0,0,0,0.95);
-    align-items: center; justify-content: center;
-    padding: 40px;
-  }
-  .lightbox.open { display: flex; }
-  .lightbox-img { max-width: 100%; max-height: 85vh; object-fit: contain; }
-
-  .lightbox-close {
-    position: fixed; top: 30px; right: 40px;
-    font-size: 28px;
-    color: rgba(240,235,226,0.6);
-    transition: color 0.2s;
-  }
-  .lightbox-close:hover { color: var(--cream); }
-
-  /* Responsive Rules */
-  @media (max-width: 640px) {
-    .art-header { padding: 20px; }
-    .art-grid { padding: 20px; gap: 10px; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); }
-    .project-buttons-grid { gap: 32px; }
-    #main-view { padding: 30px 20px 40px; }
-
-    /* Kept text perfectly centered and readable on mobile layouts */
-    .bio-paragraph {
-      font-size: 14px;
-      line-height: 1.65;
-      padding: 0;
-      text-align: center;
-    }
-    .profile-frame { max-width: 125px; margin-bottom: 20px; }
-    .social-row { gap: 16px; }
-    #art-view { padding-top: 65px; }
-  }
-
-  /* Extra safety net for short/small phone screens so the bio + image + buttons
-     always fit inside one viewport with zero scroll, even with the address bar showing */
-  @media (max-height: 700px) {
-    #main-view { padding: 22px 20px 28px; }
-    .nav-header { gap: 6px; }
-    .profile-frame { max-width: 100px; margin-bottom: 16px; }
-    .bio-paragraph { font-size: 13px; line-height: 1.55; }
-  }
-  @media (max-height: 580px) {
-    .profile-frame { max-width: 80px; margin-bottom: 12px; }
-    .bio-paragraph { font-size: 12.5px; line-height: 1.45; }
-  }
+@media (max-width:700px){
+  #home{padding-left:20px;padding-right:20px}
+  .top .tnav,.top .soc{display:none}
+  .burger,.mclose{display:block}
+  .menu{display:flex;flex-direction:column;justify-content:space-between;position:fixed;inset:0;z-index:110;background:#fff;padding:calc(30px + env(safe-area-inset-top,0px)) 20px calc(28px + env(safe-area-inset-bottom,0px));clip-path:circle(0 at 34px 40px);visibility:hidden;transition:clip-path .7s var(--ease),visibility 0s .7s}
+  .menu.open{clip-path:circle(150% at 34px 40px);visibility:visible;transition:clip-path .7s var(--ease)}
+  .bar{padding-left:20px;padding-right:20px}
+  .wrap{padding:120px 22px 80px}
+  .cv{grid-template-columns:1fr}
+  .grid{padding:84px 16px 16px;gap:10px;grid-template-columns:repeat(auto-fill,minmax(140px,1fr))}
+  .note{padding:0 16px 60px}
+  .lb .x{right:20px}.lb .p{left:20px}.lb .n{right:20px}
+}
+@media (max-width:700px),(hover:none){
+  .proj,.proj:hover,.proj:focus-visible{flex-direction:column;align-items:flex-start;padding:30px 0}
+  .shot,.proj:hover .shot{width:100%;margin:0 0 16px;opacity:1;transform:none}
+  .fs{width:100%}
+  .proj h3{flex:none;padding:0;margin-bottom:8px}
+  .more{grid-template-rows:1fr;opacity:1;margin-top:8px}
+  .go{margin:14px 0 0}
+}
+@media (max-height:640px){.bio{font-size:13.5px;line-height:1.55;margin-bottom:22px}h1{margin-bottom:16px}}
+@media (prefers-reduced-motion:reduce){*{animation-duration:.001ms!important;animation-delay:0s!important;transition-duration:.001ms!important}.rv{opacity:1;transform:none}}
 </style>
 </head>
 <body>
+<div class="curtain" id="curtain"></div>
 
-<div class="grain"></div>
+<div class="menu" id="menu" aria-hidden="true">
+  <button class="mclose" id="mclose" aria-label="Close menu"><i></i><i></i></button>
+  <nav class="mnav" aria-label="Menu">
+    <button data-go="projects" style="--i:0">Projects</button>
+    <button data-go="cv" style="--i:1">CV</button>
+    <button data-go="art" style="--i:2">Artwork</button>
+    <button data-go="contact" style="--i:3">Contact</button>
+  </nav>
+  <div class="msoc">
+    <a class="ln" href="https://instagram.com/B3rwan" target="_blank" rel="noopener">Instagram</a>
+    <a class="ln" href="https://x.com/BerwanBarzinji" target="_blank" rel="noopener">Twitter</a>
+    <a class="ln" href="https://t.me/+1jB6Ldg0YQM0MmYy" target="_blank" rel="noopener">Telegram</a>
+  </div>
+</div>
 
-<!-- ══════════════ PORTFOLIO MAIN PAGE (CREAM / FIXED RESPONSIVE VIEWPORT) ══════════════ -->
-<main id="main-view" class="view active">
-
-  <!-- Navigation Header Links -->
-  <header class="nav-header">
-    <div class="social-row">
-      <a class="social-link" href="https://instagram.com/B3rwan" target="_blank" rel="noopener">Instagram</a>
-      <span class="dot"></span>
-      <a class="social-link" href="https://x.com/BerwanBarzinji" target="_blank" rel="noopener">Twitter</a>
-      <span class="dot"></span>
-      <a class="social-link" href="https://t.me/+1jB6Ldg0YQM0MmYy" target="_blank" rel="noopener">Telegram</a>
+<!-- HOME -->
+<main id="home" class="view active">
+  <header class="top rv" style="--i:0">
+    <button class="burger" id="burger" aria-label="Open menu" aria-expanded="false"><i></i><i></i></button>
+    <nav class="tnav" aria-label="Sections">
+      <button class="ln" data-go="projects">Projects</button>
+      <button class="ln" data-go="cv">CV</button>
+      <button class="ln" data-go="art">Artwork</button>
+      <button class="ln" data-go="contact">Contact</button>
+    </nav>
+    <div class="soc">
+      <a class="ln" href="https://instagram.com/B3rwan" target="_blank" rel="noopener">Instagram</a>
+      <a class="ln" href="https://x.com/BerwanBarzinji" target="_blank" rel="noopener">Twitter</a>
+      <a class="ln" href="https://t.me/+1jB6Ldg0YQM0MmYy" target="_blank" rel="noopener">Telegram</a>
     </div>
-    <a class="email-link" href="mailto:salihberwan@gmail.com">salihberwan@gmail.com</a>
   </header>
 
-  <!-- Profile Section with Highly Legible Custom Bio Narrative -->
-  <section class="profile-section">
-    <div class="profile-frame">
-      <img src="berwan.jpg" alt="Berwan Farhad">
-    </div>
-    <div class="bio-paragraph">
-      I'm Berwan Farhad, a Communication Engineer driven by technology, innovation, and the pursuit of better solutions. My experience spans telecommunications, networking, software development, and data-driven projects, where I combine technical expertise with creative thinking to tackle complex challenges. I am passionate about building impactful technologies and continuously expanding my knowledge in a rapidly evolving industry.
+  <section class="center">
+    <p class="hi rv" style="--i:1"><span id="hi">Hello</span>, I'm</p>
+    <h1 class="rv" style="--i:2" id="name" aria-label="Berwan Barzinji">Berwan Barzinji</h1>
+    <p class="bio rv" style="--i:3">Thanks for stopping by. I’m a Communication Engineer with an interest in tech and design, currently working on a few projects of my own. Open to opportunities with good people and good companies.</p>
+    <div class="btns rv" style="--i:4">
+      <button class="btn dark" data-go="projects">Projects</button>
+      <button class="btn light" data-go="cv">View CV</button>
     </div>
   </section>
 
-  <!-- Balanced Bottom Nav Controls -->
-  <footer class="project-nav-container">
-    <div class="project-buttons-grid">
-      <button class="action-btn" onclick="switchView('art-view')">Art Works</button>
-      <a class="action-btn" href="https://website-delta-seven-74.vercel.app/" target="_blank" rel="noopener">Project (Loading)</a>
-    </div>
-  </footer>
-
+  <div aria-hidden="true" style="height:18px"></div>
 </main>
 
-<!-- ══════════════ ART PROJECTS GALLERY VIEW (ALL BLACK) ══════════════ -->
-<section id="art-view" class="view">
-
-  <!-- Sticky Locked Header Frame -->
-  <header class="art-header">
-    <button class="back-btn" onclick="switchView('main-view')">← Back</button>
-    <h2 class="art-title">Art</h2>
-    <div style="width: 45px; opacity:0;"></div>
-  </header>
-
-  <!-- Array reduced to 9 elements as requested -->
-  <div class="art-grid">
-    <div class="art-item"><img src="art1.jpg" alt="Artwork 01"></div>
-    <div class="art-item"><img src="art2.jpg" alt="Artwork 02"></div>
-    <div class="art-item"><img src="art3.jpg" alt="Artwork 03"></div>
-    <div class="art-item"><img src="art4.jpg" alt="Artwork 04"></div>
-    <div class="art-item"><img src="art5.jpg" alt="Artwork 05"></div>
-    <div class="art-item"><img src="art6.jpg" alt="Artwork 06"></div>
-    <div class="art-item"><img src="art7.jpg" alt="Artwork 07"></div>
-    <div class="art-item"><img src="art8.jpg" alt="Artwork 08"></div>
-    <div class="art-item"><img src="art9.jpg" alt="Artwork 09"></div>
+<!-- PROJECTS -->
+<section id="projects" class="view">
+  <div class="bar"><button class="back ln" data-go="home"><svg viewBox="0 0 16 16" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 8H2.5M7 3.5 2.5 8 7 12.5"/></svg>Back</button><span class="t">Projects</span></div>
+  <div class="wrap">
+    <h2 class="lead rv" style="--i:0">Three recent works, <em>open any to see it live.</em></h2>
+    <div class="list rv" style="--i:2">
+      <!-- For each project: set href, title, the one-line sentence, the details, and data-img (a 1920x1080 screenshot of the page, e.g. shot1.jpg) -->
+      <a class="proj" href="#" data-soon data-img="" aria-label="Project one"><span class="shot"><span class="fs"><span>Preview soon</span></span></span><div class="txt"><p class="one">One honest sentence about what it is and what you learned building it.</p><div class="more"><p>Add more detail here: what it does, the tools you used, and what you would improve.</p></div></div><span class="go">Visit <b>↗</b></span></a>
+      <a class="proj" href="#" data-soon data-img="" aria-label="Project two"><span class="shot"><span class="fs"><span>Preview soon</span></span></span><div class="txt"><p class="one">One honest sentence about what it is and what you learned building it.</p><div class="more"><p>Add more detail here: what it does, the tools you used, and what you would improve.</p></div></div><span class="go">Visit <b>↗</b></span></a>
+      <a class="proj" href="#" data-soon data-img="" aria-label="Project three"><span class="shot"><span class="fs"><span>Preview soon</span></span></span><div class="txt"><p class="one">One honest sentence about what it is and what you learned building it.</p><div class="more"><p>Add more detail here: what it does, the tools you used, and what you would improve.</p></div></div><span class="go">Visit <b>↗</b></span></a>
+    </div>
   </div>
-
 </section>
 
-<!-- ══════════════ INTERACTIVE LIGHTBOX VIEW SCREEN ══════════════ -->
-<div class="lightbox" id="lightbox">
-  <button class="lightbox-close" aria-label="Close" onclick="closeLightbox()">×</button>
-  <img class="lightbox-img" id="lightbox-img" src="" alt="">
+<!-- CV -->
+<section id="cv" class="view">
+  <div class="bar"><button class="back ln" data-go="home"><svg viewBox="0 0 16 16" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 8H2.5M7 3.5 2.5 8 7 12.5"/></svg>Back</button><span class="t">CV</span></div>
+  <div class="wrap">
+    <h2 class="lead rv" style="--i:0">A Little About <em>My Background</em></h2>
+    <div class="rv" style="--i:2">
+      <div class="cv"><h2>Profile</h2><p class="prose">Communication Engineer with an interest in tech and design. I enjoy working on independent projects, learning by building, and collaborating with people who care about what they do.</p></div>
+      <div class="cv"><h2>Technical skills</h2><dl class="kv">
+        <dt>Frontend</dt><dd>HTML, CSS, JavaScript, React, Next.js</dd>
+        <dt>Backend</dt><dd>Supabase, authentication, database integration</dd>
+        <dt>Integrations</dt><dd>APIs, Resend, email workflows</dd>
+        <dt>Design &amp; media</dt><dd>UI design, graphic design, motion graphics</dd>
+        <dt>Tools</dt><dd>Git, GitHub, AI-assisted development</dd>
+        <dt>Other</dt><dd>Responsive design, problem-solving, project ownership</dd>
+      </dl></div>
+      <div class="cv"><h2>Selected projects</h2><ul>
+        <li><b>BeCoolOne</b><span>Independent project</span><span>Built with Next.js, Supabase, and Resend.</span><span>Includes customer submissions, email collection, and automated email delivery workflows.</span></li>
+        <li><b>Café Website</b><span>Website concept</span><span>Modern website concept featuring menu highlights, business information, and subscription content.</span></li>
+        <li><b>Dental Clinic Website</b><span>Website concept</span><span>Responsive website concept presenting treatments, clinic information, and appointment enquiries.</span></li>
+      </ul></div>
+      <div class="cv"><h2>Experience</h2><ul>
+        <li><b>Freelance Web Development &amp; Digital Design</b><span>Independent projects</span><span>Building websites and web experiences for personal projects and portfolio concepts.</span><span>Creating graphic designs and motion graphics for digital content.</span><span>Managing projects independently, from initial ideas through implementation and delivery.</span></li>
+        <li><b>Huawei</b><span>5G internship</span><span>Gained exposure to telecommunications technology and professional engineering workflows.</span></li>
+        <li><b>Meed Foundation</b><span>Data collector</span><span>Supported data collection activities as part of a short-term project.</span></li>
+        <li><b>GIZ</b><span>Volunteer</span><span>Contributed to volunteer activities and collaborative initiatives.</span></li>
+      </ul></div>
+      <div class="cv"><h2>Education</h2><ul><li><b>Polytechnic University of Sulaimani</b><span>Communication Engineering · 2017–2022</span></li></ul></div>
+      <div class="cv"><h2>Working style</h2><ul><li><span>Comfortable working independently or as part of a team.</span><span>Clear communication and a collaborative approach.</span><span>Organized, dependable, and focused on meeting agreed deadlines.</span><span>Adaptable when priorities or project requirements change.</span></li></ul></div>
+      <div class="cv"><h2>Languages</h2><dl class="kv">
+        <dt>Kurdish</dt><dd>Native</dd>
+        <dt>English</dt><dd>Fluent</dd>
+        <dt>Arabic</dt><dd>Good working proficiency</dd>
+        <dt>German</dt><dd>Basic proficiency · Currently learning</dd>
+      </dl></div>
+      <div class="cv"><h2>Links</h2><dl class="kv">
+        <dt>Portfolio</dt><dd><a class="ln" href="https://berwan.com/" target="_blank" rel="noopener">berwan.com</a></dd>
+        <dt>Instagram</dt><dd><a class="ln" href="https://instagram.com/B3rwan" target="_blank" rel="noopener">@B3rwan</a></dd>
+        <dt>X (Twitter)</dt><dd><a class="ln" href="https://x.com/BerwanBarzinji" target="_blank" rel="noopener">@BerwanBarzinji</a></dd>
+        <dt>Email</dt><dd><a class="ln" href="mailto:salihberwan@gmail.com">salihberwan@gmail.com</a></dd>
+      </dl></div>
+      <a class="dl ln" href="#" data-soon>Download CV as PDF</a>
+    </div>
+  </div>
+</section>
+
+<!-- ART -->
+<section id="art" class="view">
+  <div class="bar"><button class="back ln" data-go="home"><svg viewBox="0 0 16 16" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 8H2.5M7 3.5 2.5 8 7 12.5"/></svg>Back</button><span class="t">Artwork</span></div>
+  <div class="grid">
+    <div class="item"><img src="art1.jpg" alt="Artwork 01" loading="lazy"></div>
+    <div class="item"><img src="art2.jpg" alt="Artwork 02" loading="lazy"></div>
+    <div class="item"><img src="art3.jpg" alt="Artwork 03" loading="lazy"></div>
+    <div class="item"><img src="art4.jpg" alt="Artwork 04" loading="lazy"></div>
+    <div class="item"><img src="art5.jpg" alt="Artwork 05" loading="lazy"></div>
+    <div class="item"><img src="art6.jpg" alt="Artwork 06" loading="lazy"></div>
+    <div class="item"><img src="art7.jpg" alt="Artwork 07" loading="lazy"></div>
+    <div class="item"><img src="art8.jpg" alt="Artwork 08" loading="lazy"></div>
+    <div class="item"><img src="art9.jpg" alt="Artwork 09" loading="lazy"></div>
+  </div>
+  <p class="note">Digital works made by hand, before AI image tools.</p>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" class="view">
+  <div class="bar"><button class="back ln" data-go="home"><svg viewBox="0 0 16 16" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 8H2.5M7 3.5 2.5 8 7 12.5"/></svg>Back</button><span class="t">Contact</span></div>
+  <div class="wrap">
+    <h2 class="lead rv" style="--i:0">Have a project? <em>Write to me.</em></h2>
+    <a class="mail rv ln" style="--i:2" href="mailto:salihberwan@gmail.com" id="mail">salihberwan@gmail.com</a>
+    <p class="copy rv" style="--i:3" id="copied"></p>
+    <div class="links rv" style="--i:4">
+      <a class="ln" href="https://instagram.com/B3rwan" target="_blank" rel="noopener">Instagram</a>
+      <a class="ln" href="https://x.com/BerwanBarzinji" target="_blank" rel="noopener">Twitter</a>
+      <a class="ln" href="https://t.me/+1jB6Ldg0YQM0MmYy" target="_blank" rel="noopener">Telegram</a>
+    </div>
+  </div>
+</section>
+
+<div class="lb" id="lb">
+  <button class="x" id="lbx">Close</button><button class="p" id="lbp">Previous</button><button class="n" id="lbn">Next</button>
+  <img id="lbi" src="" alt="">
 </div>
 
 <script>
-  // Dynamic Page Transition Logic
-  function switchView(viewId) {
-    document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
-    document.getElementById(viewId).classList.add('active');
-    window.scrollTo({ top: 0 });
-  }
+const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
+const ids=['home','projects','cv','art','contact'];
+let current='home', busy=false;
+const curtain=$('#curtain');
 
-  // Lightbox View Activation
-  document.querySelectorAll('.art-item').forEach(item => {
-    item.addEventListener('click', () => {
-      const targetImgSrc = item.querySelector('img').src;
-      const targetImgAlt = item.querySelector('img').alt;
+function show(id){
+  if(!ids.includes(id)||id===current||busy) return;
+  busy=true; curtain.className='curtain in';
+  setTimeout(()=>{
+    $('#'+current).classList.remove('active'); $('#'+id).classList.add('active');
+    current=id; scrollTo(0,0);
+    document.title=id==='home'?'Berwan Barzinji':'Berwan Barzinji · '+(id==='art'?'Artwork':id==='cv'?'CV':id[0].toUpperCase()+id.slice(1));
+    curtain.className='curtain out';
+    setTimeout(()=>{curtain.className='curtain';busy=false},520);
+  },520);
+}
+function go(id){ if(location.hash.slice(1)!==id) location.hash=id==='home'?'':id; else show(id); }
+$$('[data-go]').forEach(b=>b.addEventListener('click',()=>go(b.dataset.go)));
+addEventListener('hashchange',()=>show(location.hash.slice(1)||'home'));
+if(ids.includes(location.hash.slice(1))){$('#home').classList.remove('active');current=location.hash.slice(1);$('#'+current).classList.add('active')}
 
-      document.getElementById('lightbox-img').src = targetImgSrc;
-      document.getElementById('lightbox-img').alt = targetImgAlt;
-      document.getElementById('lightbox').classList.add('open');
+// mobile menu
+const menu=$('#menu');
+function setMenu(o){menu.classList.toggle('open',o);menu.setAttribute('aria-hidden',!o);$('#burger').setAttribute('aria-expanded',o)}
+$('#burger').addEventListener('click',()=>setMenu(true));
+$('#mclose').addEventListener('click',()=>setMenu(false));
+$$('.menu [data-go]').forEach(b=>b.addEventListener('click',()=>setTimeout(()=>setMenu(false),560)));
+addEventListener('resize',()=>{if(innerWidth>700)setMenu(false)});
+
+// links with href="#" do nothing until you add a real address
+$$('[data-soon]').forEach(a=>a.addEventListener('click',e=>{if(a.getAttribute('href')==='#')e.preventDefault()}));
+
+// greeting rotates through languages
+(function(){
+  const el=$('#hi'), words=['Hello','Bonjour','مرحبا','Hallo'];let i=0;
+  setInterval(()=>{el.classList.add('swap');setTimeout(()=>{i=(i+1)%words.length;el.textContent=words[i];el.dir=/[\u0600-\u06FF]/.test(words[i])?'rtl':'ltr';el.classList.remove('swap')},350)},2600);
+})();
+
+// name: letters near the pointer stay sharp and lift, the rest fade back
+(function(){
+  const h=$('#name'), text=h.textContent; h.textContent='';
+  const cs=[...text].map(ch=>{const s=document.createElement('span');s.className='c';s.setAttribute('aria-hidden','true');s.textContent=ch===' '?'\u00a0':ch;h.appendChild(s);return s});
+  if(matchMedia('(hover:none)').matches) return;
+  addEventListener('pointermove',e=>{
+    const r=h.getBoundingClientRect();
+    if(e.clientY<r.top-140||e.clientY>r.bottom+140){cs.forEach(c=>{c.style.transform='';c.style.opacity=''});return}
+    cs.forEach(c=>{
+      const b=c.getBoundingClientRect(), d=Math.hypot(e.clientX-(b.left+b.width/2),(e.clientY-(b.top+b.height/2))*.6);
+      const k=Math.max(0,1-d/260);
+      c.style.transform=`translateY(${-k*10}px)`; c.style.opacity=(.3+.7*k).toFixed(2);
     });
   });
+  document.addEventListener('pointerleave',()=>cs.forEach(c=>{c.style.transform='';c.style.opacity=''}));
+})();
 
-  function closeLightbox() {
-    document.getElementById('lightbox').classList.remove('open');
-  }
+// project screenshots
+$$('.proj').forEach(r=>{const img=r.dataset.img;if(img){const f=r.querySelector('.fs');f.style.backgroundImage=`url("${img}")`;f.classList.add('has')}});
 
-  document.getElementById('lightbox').addEventListener('click', function(e) {
-    if (e.target === this) closeLightbox();
-  });
+// copy email
+$('#mail').addEventListener('click',()=>{
+  if(navigator.clipboard) navigator.clipboard.writeText('salihberwan@gmail.com').then(()=>{$('#copied').textContent='Email copied. Your mail app is opening too.'}).catch(()=>{});
+});
 
-  document.addEventListener('keydown', e => {
-    if (e.key === 'Escape') closeLightbox();
-  });
+// lightbox
+const items=$$('.item img'); let li=0;
+const lb=$('#lb'),lbi=$('#lbi');
+function open(i){li=(i+items.length)%items.length;lbi.src=items[li].src;lbi.alt=items[li].alt;lb.classList.add('open')}
+items.forEach((im,i)=>im.parentElement.addEventListener('click',()=>open(i)));
+const close=()=>lb.classList.remove('open');
+$('#lbx').onclick=close;$('#lbp').onclick=()=>open(li-1);$('#lbn').onclick=()=>open(li+1);
+lb.addEventListener('click',e=>{if(e.target===lb)close()});
+addEventListener('keydown',e=>{
+  if(menu.classList.contains('open')&&e.key==='Escape'){setMenu(false);return}
+  if(lb.classList.contains('open')){if(e.key==='Escape')close();if(e.key==='ArrowLeft')open(li-1);if(e.key==='ArrowRight')open(li+1)}
+  else if(e.key==='Escape'&&current!=='home')go('home');
+});
 </script>
-
 </body>
 </html>
