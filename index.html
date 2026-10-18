@@ -85,13 +85,16 @@ h1 .c{display:inline-block;transition:transform .35s var(--ease),opacity .35s;wi
 .list{border-top:1px solid var(--line)}
 .list:hover .proj:not(:hover){opacity:.3}
 
-.proj{display:flex;align-items:center;padding:34px 0;border-bottom:1px solid var(--line);transition:opacity .4s,padding .6s var(--ease)}
-.proj:hover,.proj:focus-visible{padding-top:46px;padding-bottom:46px}
+.proj{display:flex;align-items:center;padding:18px 0;border-bottom:1px solid var(--line);transition:opacity .4s,padding .6s var(--ease)}
+.proj:hover,.proj:focus-visible{padding-top:28px;padding-bottom:28px}
 .shot{flex:none;width:0;margin-right:0;opacity:0;transform:translateX(-30px);overflow:hidden;border-radius:6px;transition:width .7s var(--ease),margin .7s var(--ease),opacity .5s,transform .7s var(--ease)}
 .proj:hover .shot,.proj:focus-visible .shot{width:280px;margin-right:32px;opacity:1;transform:none}
 .fs{width:280px;aspect-ratio:16/9;display:grid;place-items:center;font-size:11px;color:var(--muted);background:center/cover no-repeat repeating-linear-gradient(135deg,rgba(0,0,0,.045) 0 1px,transparent 1px 12px),#f3f3f3}
 .fs.has span{display:none}
-.proj h3{flex:0 0 22%;padding-right:16px;font-weight:300;font-size:clamp(22px,3vw,32px);letter-spacing:-.03em}
+.proj h3{font-weight:300;font-size:clamp(22px,3vw,32px);letter-spacing:-.03em;line-height:1.2;max-height:1.4em;margin-bottom:4px;white-space:nowrap;overflow:hidden;transition:max-height .7s var(--ease),margin .7s var(--ease),opacity .45s,transform .7s var(--ease)}
+@media (min-width:701px) and (hover:hover){
+  .proj:hover h3,.proj:focus-visible h3{max-height:0;margin-bottom:0;opacity:0;transform:translateY(-10px)}
+}
 .txt{flex:1;min-width:0}
 .one{font-size:16px;font-weight:500;line-height:1.5;letter-spacing:-.015em}
 .more{display:grid;grid-template-rows:0fr;opacity:0;margin-top:0;transition:grid-template-rows .6s var(--ease),opacity .5s,margin-top .6s var(--ease)}
@@ -151,7 +154,7 @@ h1 .c{display:inline-block;transition:transform .35s var(--ease),opacity .35s;wi
   .proj,.proj:hover,.proj:focus-visible{flex-direction:column;align-items:flex-start;padding:30px 0}
   .shot,.proj:hover .shot{width:100%;margin:0 0 16px;opacity:1;transform:none}
   .fs{width:100%}
-  .proj h3{flex:none;padding:0;margin-bottom:8px}
+  .proj h3{max-height:none;padding:0;margin-bottom:8px;overflow:visible;white-space:normal;opacity:1;transform:none}
   .more{grid-template-rows:1fr;opacity:1;margin-top:8px}
   .go{margin:14px 0 0}
 }
@@ -214,9 +217,9 @@ h1 .c{display:inline-block;transition:transform .35s var(--ease),opacity .35s;wi
     <h2 class="lead rv" style="--i:0">Three recent works, <em>open any to see it live.</em></h2>
     <div class="list rv" style="--i:2">
       <!-- For each project: set href, title, the one-line sentence, the details, and data-img (a 1920x1080 screenshot of the page, e.g. shot1.jpg) -->
-      <a class="proj" href="#" data-soon data-img="" aria-label="Project one"><span class="shot"><span class="fs"><span>Preview soon</span></span></span><div class="txt"><p class="one">One honest sentence about what it is and what you learned building it.</p><div class="more"><p>Add more detail here: what it does, the tools you used, and what you would improve.</p></div></div><span class="go">Visit <b>↗</b></span></a>
-      <a class="proj" href="#" data-soon data-img="" aria-label="Project two"><span class="shot"><span class="fs"><span>Preview soon</span></span></span><div class="txt"><p class="one">One honest sentence about what it is and what you learned building it.</p><div class="more"><p>Add more detail here: what it does, the tools you used, and what you would improve.</p></div></div><span class="go">Visit <b>↗</b></span></a>
-      <a class="proj" href="#" data-soon data-img="" aria-label="Project three"><span class="shot"><span class="fs"><span>Preview soon</span></span></span><div class="txt"><p class="one">One honest sentence about what it is and what you learned building it.</p><div class="more"><p>Add more detail here: what it does, the tools you used, and what you would improve.</p></div></div><span class="go">Visit <b>↗</b></span></a>
+      <a class="proj" href="#" data-soon data-img="cover.jpg" aria-label="BECOOLONE"><span class="shot"><span class="fs"><span>Preview soon</span></span></span><div class="txt"><h3>BECOOLONE</h3><p class="one">A Better Look at Your Potential</p><div class="more"><p>A personalized face-enhancement experience combining AI-assisted analysis with tailored recommendations.<br>Next.js · Supabase · Resend</p></div></div><span class="go">Visit <b>↗</b></span></a>
+      <a class="proj" href="#" data-soon data-img="coverr.jpg" aria-label="Maison Café"><span class="shot"><span class="fs"><span>Preview soon</span></span></span><div class="txt"><h3>Maison Café</h3><p class="one">An Elegant Café Experience, Simplified</p><div class="more"><p>A clean, responsive café website built with HTML, CSS, and JavaScript, featuring elegant design, smooth animations, and a seamless experience across all screen sizes.</p></div></div><span class="go">Visit <b>↗</b></span></a>
+      <a class="proj" href="#" data-soon data-img="coverrr.jpg" aria-label="Rapid Fix Plumbing"><span class="shot"><span class="fs"><span>Preview soon</span></span></span><div class="txt"><h3>Rapid Fix Plumbing</h3><p class="one">A Better Online Presence for Local Services</p><div class="more"><p>A modern, responsive plumbing website built with HTML, CSS, and JavaScript, featuring clear service information, easy-to-find contact details, and smooth animations across all screen sizes.</p></div></div><span class="go">Visit <b>↗</b></span></a>
     </div>
   </div>
 </section>
