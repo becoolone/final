@@ -264,7 +264,7 @@ h1 .c{display:inline-block;transition:transform .35s var(--ease),opacity .35s;wi
         <dt>X (Twitter)</dt><dd><a class="ln" href="https://x.com/BerwanBarzinji" target="_blank" rel="noopener">@BerwanBarzinji</a></dd>
         <dt>Email</dt><dd><a class="ln" href="mailto:salihberwan@gmail.com">salihberwan@gmail.com</a></dd>
       </dl></div>
-      <a class="dl ln" href="#" data-soon>Download CV as PDF</a>
+      <a class="dl ln" href="#" id="dlcv">Download CV as PDF</a>
     </div>
   </div>
 </section>
@@ -336,9 +336,6 @@ $('#mclose').addEventListener('click',()=>setMenu(false));
 $$('.menu [data-go]').forEach(b=>b.addEventListener('click',()=>setTimeout(()=>setMenu(false),560)));
 addEventListener('resize',()=>{if(innerWidth>700)setMenu(false)});
 
-// links with href="#" do nothing until you add a real address
-$$('[data-soon]').forEach(a=>a.addEventListener('click',e=>{if(a.getAttribute('href')==='#')e.preventDefault()}));
-
 // greeting rotates through languages
 (function(){
   const el=$('#hi'), words=['Hello','Bonjour','مرحبا','Hallo'];let i=0;
@@ -378,6 +375,81 @@ $$('.proj').forEach(r=>{const img=r.dataset.img;if(img){const f=r.querySelector(
 $('#mail').addEventListener('click',()=>{
   if(navigator.clipboard) navigator.clipboard.writeText('salihberwan@gmail.com').then(()=>{$('#copied').textContent='Email copied. Your mail app is opening too.'}).catch(()=>{});
 });
+
+// download CV as PDF (built from the CV section above, white background)
+$('#dlcv').addEventListener('click',async e=>{
+  e.preventDefault();
+  const a=e.currentTarget, label=a.textContent;
+  try{
+    a.textContent='Preparing…';
+    if(!window.jspdf) await new Promise((res,rej)=>{
+      const s=document.createElement('script');
+      s.src='https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js';
+      s.onload=res;s.onerror=rej;document.head.appendChild(s);
+    });
+    buildCV();
+  }catch(err){ window.print(); }
+  finally{ a.textContent=label; }
+});
+
+function buildCV(){
+  const {jsPDF}=window.jspdf;
+  const doc=new jsPDF({unit:'pt',format:'a4'});
+  const W=doc.internal.pageSize.getWidth(), H=doc.internal.pageSize.getHeight();
+  const M=54, LX=M+130, CW=W-M-LX;
+  let y=M;
+  const clean=t=>t.replace(/\s+/g,' ').replace(/[–—]/g,'-').replace(/[’‘]/g,"'").trim();
+  const need=h=>{if(y+h>H-M){doc.addPage();y=M}};
+  const para=(t,x,w,size,style,col,lh=1.45)=>{
+    doc.setFont('helvetica',style);doc.setFontSize(size);doc.setTextColor(col);
+    doc.splitTextToSize(clean(t),w).forEach(l=>{need(size*lh);doc.text(l,x,y+size);y+=size*lh});
+  };
+
+  // header
+  doc.setFont('helvetica','normal');doc.setFontSize(28);doc.setTextColor(13);
+  doc.text('Berwan Barzinji',M,y+24);y+=40;
+  para('Communication Engineer',M,CW+130,12,'normal',110);
+  para('salihberwan@gmail.com  ·  berwan.com',M,CW+130,10,'normal',140);
+  y+=14;
+
+  document.querySelectorAll('#cv .cv').forEach(sec=>{
+    need(60);
+    doc.setDrawColor(215);doc.line(M,y,W-M,y);y+=18;
+    doc.setFont('helvetica','normal');doc.setFontSize(9);doc.setTextColor(140);
+    doc.text(clean(sec.querySelector('h2').textContent).toUpperCase(),M,y+9);
+
+    const prose=sec.querySelector('.prose');
+    if(prose) para(prose.textContent,LX,CW,10.5,'normal',40,1.6);
+
+    sec.querySelectorAll('.kv').forEach(kv=>{
+      kv.querySelectorAll('dt').forEach(dt=>{
+        const dd=dt.nextElementSibling, link=dd.querySelector('a');
+        need(16);
+        doc.setFont('helvetica','normal');doc.setFontSize(10);doc.setTextColor(140);
+        doc.text(clean(dt.textContent),LX,y+10);
+        const x=LX+95, w=CW-95;
+        if(link){
+          doc.setTextColor(13);
+          doc.textWithLink(clean(dd.textContent),x,y+10,{url:link.href});
+          y+=16;
+        } else {
+          para(dd.textContent,x,w,10,'normal',13,1.5);
+          y+=2;
+        }
+      });
+    });
+
+    sec.querySelectorAll('ul > li').forEach(li=>{
+      const b=li.querySelector('b');
+      if(b){need(34);para(b.textContent,LX,CW,11.5,'bold',13,1.5);}
+      li.querySelectorAll('span').forEach(s=>para(s.textContent,LX,CW,10,'normal',110,1.55));
+      y+=10;
+    });
+    y+=14;
+  });
+
+  doc.save('Berwan-Barzinji-CV.pdf');
+}
 
 // lightbox
 const items=$$('.item img'); let li=0;
